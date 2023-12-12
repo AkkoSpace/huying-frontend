@@ -40,6 +40,7 @@ export default {
   'menu.result': 'Result',
   'menu.exception': 'Exception',
   'menu.transaction': 'Transaction',
+  'menu.transaction.order': 'Order',
   'menu.form': 'Form',
   'menu.profile': 'Profile',
   'menu.visualization': 'Data Visualization',

@@ -21,6 +21,6 @@ declare module 'vue' {
     RouterView: typeof import('vue-router')['RouterView']
     TabBar: typeof import('./src/components/tab-bar/index.vue')['default']
     TabItem: typeof import('./src/components/tab-bar/tab-item.vue')['default']
-    TCalendar: typeof import('tdesign-vue-next')['Calendar']
+    TTable: typeof import('tdesign-vue-next')['Table']
   }
 }
