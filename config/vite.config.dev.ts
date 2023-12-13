@@ -3,6 +3,7 @@ import eslint from 'vite-plugin-eslint';
 import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
 import { TDesignResolver } from 'unplugin-vue-components/resolvers';
+import UnoCSS from 'unocss/vite';
 import baseConfig from './vite.config.base';
 
 export default mergeConfig(
@@ -15,6 +16,7 @@ export default mergeConfig(
       },
     },
     plugins: [
+      UnoCSS(),
       eslint({
         cache: false,
         include: ['src/**/*.ts', 'src/**/*.tsx', 'src/**/*.vue'],
