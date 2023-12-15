@@ -1,31 +1,81 @@
 <template>
   <div h-full w-full>
-    <div class="h-[180px]" flex flex-row pt-4 px-3>
+    <div class="h-[180px] card-custom" flex flex-row pt-4 px-3>
       <div class="w-3/4">
         <a-card h-full> 333</a-card>
       </div>
-      <div class="w-1/4" pl-2>
-        <a-card h-full> 4444</a-card>
+      <div class="w-1/4" h-full pl-2>
+        <a-card h-full>
+          <div flex flex-row h-full items-center justify-center>
+            <div class="w-1/3" flex justify-center>
+              <icon-font :size="32" type="icon-a-024_tianjia" />
+            </div>
+            <div class="w-1/3" flex justify-center>
+              <icon-font :size="32" type="icon-a-024_bianji-37" />
+            </div>
+            <div class="w-1/3" flex justify-center>
+              <icon-font
+                :size="32"
+                type="icon-a-024_sousuo"
+                @click="onSearch"
+              />
+            </div>
+          </div>
+        </a-card>
       </div>
     </div>
     <div class="h-[calc(100vh_-_280px)] card-custom" pt-4 px-3>
       <div flex flex-row h-full>
         <div class="w-3/4">
           <a-card h-full overflow-auto>
-            <a-table
-              :bordered="false"
-              :columns="columns"
-              :data="data"
-              :pagination="false"
-            />
+            <a-table :bordered="false" :columns="columns" :data="data" />
           </a-card>
         </div>
         <div class="w-1/4" pl-2>
-          <div class="h-1/4">
-            <a-card h-full> 1/4</a-card>
-          </div>
-          <div class="h-3/4" pt-2>
-            <a-card h-full> 3/4</a-card>
+          <div h-full>
+            <a-card v-if="!isSearch" animate-flip-in-y h-full> 111</a-card>
+            <a-card
+              v-if="isSearch"
+              animate-flip-in-y
+              h-full
+              flex
+              flex-col
+              overflow-auto
+            >
+              <a-form layout="vertical">
+                <a-form-item :label="t('table.transactionId')">
+                  <a-input :placeholder="t('table.transactionId.ph')" />
+                </a-form-item>
+                <a-form-item :label="t('table.amount')">
+                  <a-input :placeholder="t('table.amount.ph')" />
+                </a-form-item>
+                <a-form-item :label="t('table.transactionDate')">
+                  <a-range-picker />
+                </a-form-item>
+                <a-form-item :label="t('table.status')">
+                  <a-select :placeholder="t('table.status.ph')">
+                    <a-select-option
+                      v-for="item in ['1', '2', '3']"
+                      :key="item"
+                      :value="item"
+                    >
+                      {{ item }}
+                    </a-select-option>
+                  </a-select>
+                </a-form-item>
+                <a-form-item :label="t('table.description')">
+                  <a-input :placeholder="t('table.description.ph')" />
+                </a-form-item>
+                <a-form-item>
+                  <a-button type="secondary" shape="round" long class="w-1/2">
+                    {{ t('btn.reset') }}
+                  </a-button>
+                  <a-button type="primary" shape="round" long class="w-1/2">
+                    {{ t('btn.search') }}
+                  </a-button>
+                </a-form-item>
+              </a-form>
+            </a-card>
           </div>
         </div>
       </div>
@@ -34,133 +84,63 @@
 </template>
 
 <script lang="ts" setup>
-  import { reactive } from 'vue';
+  import { onMounted, reactive, ref } from 'vue';
+  import { Icon } from '@arco-design/web-vue';
+
+  import { listTransaction, ListTransactionData } from '@/api/transaction';
+  import { useI18n } from 'vue-i18n';
+
+  const IconFont = Icon.addFromIconFontCn({
+    src: 'https://at.alicdn.com/t/c/font_4374408_9o4y2llzel.js',
+  });
+  const { t } = useI18n();
 
   const columns = [
     {
-      title: 'Name',
-      dataIndex: 'name',
+      title: t('table.transactionId'),
+      dataIndex: 'transactionId',
     },
     {
-      title: 'Salary',
-      dataIndex: 'salary',
+      title: t('table.amount'),
+      dataIndex: 'amount',
     },
     {
-      title: 'Address',
-      dataIndex: 'address',
+      title: t('table.transactionDate'),
+      dataIndex: 'transactionDate',
     },
     {
-      title: 'Email',
-      dataIndex: 'email',
+      title: t('table.status'),
+      dataIndex: 'status',
     },
   ];
-  const data = reactive([
-    {
-      key: '1',
-      name: 'Jane Doe',
-      salary: 23000,
-      address: '32 Park Road, London',
-      email: 'jane.doe@example.com',
-    },
-    {
-      key: '2',
-      name: 'Alisa Ross',
-      salary: 25000,
-      address: '35 Park Road, London',
-      email: 'alisa.ross@example.com',
-    },
-    {
-      key: '3',
-      name: 'Kevin Sandra',
-      salary: 22000,
-      address: '31 Park Road, London',
-      email: 'kevin.sandra@example.com',
-    },
-    {
-      key: '4',
-      name: 'Ed Hellen',
-      salary: 17000,
-      address: '42 Park Road, London',
-      email: 'ed.hellen@example.com',
-    },
-    {
-      key: '5',
-      name: 'William Smith',
-      salary: 27000,
-      address: '62 Park Road, London',
-      email: 'william.smith@example.com',
-    },
-    {
-      key: '11',
-      name: 'Jane Doe',
-      salary: 23000,
-      address: '32 Park Road, London',
-      email: 'jane.doe@example.com',
-    },
-    {
-      key: '12',
-      name: 'Alisa Ross',
-      salary: 25000,
-      address: '35 Park Road, London',
-      email: 'alisa.ross@example.com',
-    },
-    {
-      key: '13',
-      name: 'Kevin Sandra',
-      salary: 22000,
-      address: '31 Park Road, London',
-      email: 'kevin.sandra@example.com',
-    },
-    {
-      key: '14',
-      name: 'Ed Hellen',
-      salary: 17000,
-      address: '42 Park Road, London',
-      email: 'ed.hellen@example.com',
-    },
-    {
-      key: '15',
-      name: 'William Smith',
-      salary: 27000,
-      address: '62 Park Road, London',
-      email: 'william.smith@example.com',
-    },
-    {
-      key: '21',
-      name: 'Jane Doe',
-      salary: 23000,
-      address: '32 Park Road, London',
-      email: 'jane.doe@example.com',
-    },
-    {
-      key: '22',
-      name: 'Alisa Ross',
-      salary: 25000,
-      address: '35 Park Road, London',
-      email: 'alisa.ross@example.com',
-    },
-    {
-      key: '23',
-      name: 'Kevin Sandra',
-      salary: 22000,
-      address: '31 Park Road, London',
-      email: 'kevin.sandra@example.com',
-    },
-    {
-      key: '24',
-      name: 'Ed Hellen',
-      salary: 17000,
-      address: '42 Park Road, London',
-      email: 'ed.hellen@example.com',
-    },
-    {
-      key: '25',
-      name: 'William Smith',
-      salary: 27000,
-      address: '62 Park Road, London',
-      email: 'william.smith@example.com',
-    },
-  ]);
+  const data = reactive([]);
+
+  const isSearch = ref(false);
+
+  function onSearch() {
+    isSearch.value = !isSearch.value;
+  }
+
+  const pagation = reactive({
+    current: 1,
+    pageSize: 10,
+    total: 0,
+  });
+  const listTransactionData: ListTransactionData = {
+    current: pagation.current,
+    pageSize: pagation.pageSize,
+  };
+
+  function getListTransaction() {
+    listTransaction(listTransactionData).then((res) => {
+      console.log(res);
+      pagation.total = res.data.total;
+    });
+  }
+
+  onMounted(() => {
+    getListTransaction();
+  });
 </script>
 
 <style scoped>

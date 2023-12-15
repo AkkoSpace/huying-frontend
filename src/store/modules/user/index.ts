@@ -10,9 +10,9 @@ import {
   logout as userLogout,
   register as userRegister,
   RegisterData,
-  updateUserInfo,
-  updatePasswordData,
   updatePassword,
+  updatePasswordData,
+  updateUserInfo,
 } from '@/api/user';
 import { clearToken, setToken } from '@/utils/auth';
 import { removeRouteListener } from '@/utils/route-listener';
