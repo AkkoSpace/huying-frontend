@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="body">
     <div class="content">
       <div class="content-inner">
         <LoginForm />
@@ -13,7 +13,7 @@
 </script>
 
 <style lang="less" scoped>
-  .container {
+  .body {
     display: flex;
     height: 100vh;
     //background: linear-gradient(

@@ -17,10 +17,17 @@ declare module 'vue' {
     Menu: typeof import('./src/components/menu/index.vue')['default']
     MessageBox: typeof import('./src/components/message-box/index.vue')['default']
     Navbar: typeof import('./src/components/navbar/index.vue')['default']
+    NDivider: typeof import('naive-ui')['NDivider']
+    NH1: typeof import('naive-ui')['NH1']
+    NH2: typeof import('naive-ui')['NH2']
+    NH3: typeof import('naive-ui')['NH3']
+    NH4: typeof import('naive-ui')['NH4']
+    NText: typeof import('naive-ui')['NText']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TabBar: typeof import('./src/components/tab-bar/index.vue')['default']
     TabItem: typeof import('./src/components/tab-bar/tab-item.vue')['default']
+    TPopconfirm: typeof import('tdesign-vue-next')['Popconfirm']
     TTable: typeof import('tdesign-vue-next')['Table']
   }
 }
