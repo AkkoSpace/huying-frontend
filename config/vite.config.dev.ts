@@ -2,7 +2,10 @@ import { mergeConfig } from 'vite';
 import eslint from 'vite-plugin-eslint';
 import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
-import { TDesignResolver } from 'unplugin-vue-components/resolvers';
+import {
+  TDesignResolver,
+  NaiveUiResolver,
+} from 'unplugin-vue-components/resolvers';
 import UnoCSS from 'unocss/vite';
 import baseConfig from './vite.config.base';
 
@@ -23,6 +26,16 @@ export default mergeConfig(
         exclude: ['node_modules'],
       }),
       AutoImport({
+        imports: [
+          {
+            'naive-ui': [
+              'useDialog',
+              'useMessage',
+              'useNotification',
+              'useLoadingBar',
+            ],
+          },
+        ],
         resolvers: [
           TDesignResolver({
             library: 'vue-next',
@@ -34,6 +47,7 @@ export default mergeConfig(
           TDesignResolver({
             library: 'vue-next',
           }),
+          NaiveUiResolver(),
         ],
       }),
     ],
