@@ -15,30 +15,56 @@
             @page-change="pageChange"
             @page-size-change="pageSizeChange"
           >
+            <template #status="{ record }">
+              <a-tag v-if="record.status == 0" color="orangered">
+                <template #icon>
+                  <icon-exclamation-circle-fill />
+                </template>
+                未付款
+              </a-tag>
+              <a-tag v-if="record.status == 1" color="green">
+                <template #icon>
+                  <icon-check-circle-fill />
+                </template>
+                已付款
+              </a-tag>
+              <a-tag v-if="record.status == 2" color="gray">
+                <template #icon>
+                  <icon-close-circle-fill />
+                </template>
+                已取消
+              </a-tag>
+              <a-tag v-if="record.status == 3" color="purple">
+                <template #icon>
+                  <icon-minus-circle-fill />
+                </template>
+                已退款
+              </a-tag>
+            </template>
             <template #action="{ record }">
               <div flex flex-row justify-center>
-                <a-button
-                  type="primary"
-                  size="mini"
-                  @click="
-                    $modal.info({
-                      title: 'Name',
-                      content: record.transactionId,
-                    })
-                  "
-                >
+                <a-button size="mini" type="text" @click="onView(record.id)">
                   <template #icon>
-                    <BrowseIcon size="18px" />
+                    <BrowseIcon mt-1 size="18px" />
                   </template>
-                  <!-- Use the default slot to avoid extra spaces -->
-                  <template #default>Delete</template>
+                  <template #default>
+                    {{ t('btn.action.view') }}
+                  </template>
                 </a-button>
-                <a-button type="primary" size="mini">
+                <a-button size="mini" type="text">
                   <template #icon>
-                    <Delete1Icon size="18px" />
+                    <Delete1Icon mt-1 size="18px" />
                   </template>
-                  <!-- Use the default slot to avoid extra spaces -->
-                  <template #default>Delete</template>
+                  <template #default>
+                    {{ t('btn.action.delete') }}
+                  </template>
+                </a-button>
+              </div>
+            </template>
+            <template #pagination-left>
+              <div flex flex-row justify-start w-full>
+                <a-button type="text" shape="circle" @click="doListTransaction">
+                  <icon-refresh />
                 </a-button>
               </div>
             </template>
@@ -68,9 +94,11 @@
               @click="onClose"
             />
           </div>
+
           <div class="w-1/3" flex justify-center>
             <icon-font :size="32" type="icon-edit-grey" />
           </div>
+
           <div class="w-1/3" flex justify-center>
             <icon-font
               v-if="!isSearch && !isAdd"
@@ -120,6 +148,7 @@
                     <icon-eraser color="red-4" ml-2 size="18px" />
                   </a-tooltip>
                 </div>
+
                 <div>
                   <a-checkbox v-model="clearAfterAdd">
                     {{ t('clearAfterAdd') }}
@@ -225,6 +254,7 @@
                   </a-button>
                 </a-form-item>
               </a-form>
+
               <a-form v-if="isSearch" layout="vertical">
                 <a-form-item :label="t('transactionId')">
                   <a-input :placeholder="t('ph.transactionId')" />
@@ -274,6 +304,12 @@
         </div>
       </a-card>
     </div>
+    <a-modal v-model:visible="isView" :hide-cancel="true" @ok="handleOk">
+      <!--      <template #title>{{ detailData.transactionId }}</template>-->
+      <div>
+        <a-descriptions :data="detailData" size="large" :column="1" />
+      </div>
+    </a-modal>
   </div>
 </template>
 
@@ -286,10 +322,12 @@
     AddTransactionData,
     listTransaction,
     ListTransactionData,
+    getTransaction,
   } from '@/api/transaction';
   import { useI18n } from 'vue-i18n';
   import { useUserStore } from '@/store';
   import useLoading from '@/hooks/loading';
+  import { forEach } from 'lodash';
 
   const { loading, setLoading } = useLoading(false);
 
@@ -372,6 +410,7 @@
     {
       title: t('amount'),
       dataIndex: 'amount',
+      slotName: 'amount',
     },
     {
       title: t('transactionDate'),
@@ -381,10 +420,11 @@
     {
       title: t('status'),
       dataIndex: 'status',
+      slotName: 'status',
       align: 'center',
     },
     {
-      title: t('action'),
+      title: t('table.action'),
       slotName: 'action',
       align: 'center',
     },
@@ -392,9 +432,40 @@
   const data = reactive([{}]);
   const isAdd = ref(false);
   const isSearch = ref(false);
+  const isView = ref(false);
   const clearAfterAdd = ref(false);
   const pageStatus = ref('success');
   const pageText = ref(t('text.default'));
+  const detailData = [
+    {
+      label: t('transactionId'),
+      value: '',
+    },
+    {
+      label: t('amount'),
+      value: '',
+    },
+    {
+      label: t('transactionDate'),
+      value: '',
+    },
+    {
+      label: t('status'),
+      value: '',
+    },
+    {
+      label: t('description'),
+      value: '',
+    },
+    {
+      label: t('createDate'),
+      value: '',
+    },
+    {
+      label: t('updateDate'),
+      value: '',
+    },
+  ];
 
   function useTemplate() {
     const date = new Date();
@@ -423,6 +494,24 @@
     pageText.value = isAdd.value ? t('text.add') : t('text.default');
   }
 
+  async function onView(id: string) {
+    await getTransaction(id).then((res) => {
+      try {
+        if (res.code === 20000) {
+          console.log('res.data', res.data);
+          // TODO 设置detailData
+        }
+      } catch (error) {
+        Message.error(t('msg.get.error'));
+      }
+    });
+    isView.value = true;
+  }
+
+  function handleOk() {
+    isView.value = false;
+  }
+
   const addFormRef = ref();
   const onClose = () => {
     isAdd.value = false;
@@ -442,7 +531,6 @@
       pageSize: pagination.pageSize,
     };
     setLoading(true);
-    console.log(listTransactionData);
     listTransaction(listTransactionData).then((res) => {
       try {
         if (res.code === 20000) {
@@ -453,6 +541,13 @@
         Message.error(t('msg.list.error'));
       } finally {
         setLoading(false);
+        // 将data中的amount转换成人民币
+        forEach(data, (item: any) => {
+          item.amount = item.amount.toLocaleString('zh-CN', {
+            style: 'currency',
+            currency: 'CNY',
+          });
+        });
       }
     });
   }

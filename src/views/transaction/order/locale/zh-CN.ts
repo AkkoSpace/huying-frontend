@@ -5,7 +5,10 @@ export default {
   'transactionDate': '交易日期',
   'status': '状态',
   'description': '描述',
+  'createDate': '创建时间',
+  'updateDate': '更新时间',
   'clearAfterAdd': '保存后清空',
+  'table.action': '操作',
   // 状态
   // 交易状态：0-未付款，1-已付款，2-已取消，3-已退款
   'orderStatus.0': '未付款',
@@ -25,6 +28,8 @@ export default {
   'btn.search.ok': '查询',
   'btn.add.reset': '重置',
   'btn.add.ok': '新增',
+  'btn.action.view': '查看',
+  'btn.action.delete': '删除',
   // 文本
   'text.default': '数据统计',
   'text.search': '查询订单',

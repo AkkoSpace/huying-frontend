@@ -24,3 +24,7 @@ export interface AddTransactionData {
 export function addTransaction(data: AddTransactionData) {
   return axios.post('/api/transaction/add', data);
 }
+
+export function getTransaction(id: string) {
+  return axios.get('/api/transaction/get', { params: { id } });
+}
