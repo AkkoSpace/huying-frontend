@@ -5,8 +5,8 @@ export default {
   'transactionDate': '交易日期',
   'status': '状态',
   'description': '描述',
-  'createDate': '创建时间',
-  'updateDate': '更新时间',
+  'createTime': '创建时间',
+  'updateTime': '更新时间',
   'clearAfterAdd': '保存后清空',
   'table.action': '操作',
   // 状态
@@ -34,6 +34,9 @@ export default {
   'text.default': '数据统计',
   'text.search': '查询订单',
   'text.add': '新增订单',
+  'text.view': '查看订单',
+  'text.basic': '基本信息',
+  'text.advanced': '进阶信息',
   // 消息
   'msg.add.validate': '请检查表单',
   'msg.add.success': '新增成功',

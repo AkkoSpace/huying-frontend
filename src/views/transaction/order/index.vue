@@ -51,7 +51,7 @@
                     {{ t('btn.action.view') }}
                   </template>
                 </a-button>
-                <a-button size="mini" type="text">
+                <a-button size="mini" type="text" @click="onView(record.id)">
                   <template #icon>
                     <Delete1Icon mt-1 size="18px" />
                   </template>
@@ -63,7 +63,7 @@
             </template>
             <template #pagination-left>
               <div flex flex-row justify-start w-full>
-                <a-button type="text" shape="circle" @click="doListTransaction">
+                <a-button shape="circle" type="text" @click="doListTransaction">
                   <icon-refresh />
                 </a-button>
               </div>
@@ -304,10 +304,46 @@
         </div>
       </a-card>
     </div>
-    <a-modal v-model:visible="isView" :hide-cancel="true" @ok="handleOk">
-      <!--      <template #title>{{ detailData.transactionId }}</template>-->
+    <a-modal
+      v-model:visible="isView"
+      :hide-cancel="true"
+      :width="400"
+      @ok="handleOk"
+    >
+      <template #title>
+        {{ t('text.view') }}
+      </template>
       <div>
-        <a-descriptions :data="detailData" size="large" :column="1" />
+        <n-h5
+          type="success"
+          align-text
+          flex
+          items-center
+          justify-center
+          ml-4
+          prefix="bar"
+        >
+          <n-text type="success">
+            {{ t('text.basic') }}
+          </n-text>
+        </n-h5>
+        <a-descriptions :column="1" :data="detailDataBasic" size="large" />
+      </div>
+      <div>
+        <n-h5
+          type="success"
+          align-text
+          flex
+          items-center
+          justify-center
+          ml-4
+          prefix="bar"
+        >
+          <n-text type="success">
+            {{ t('text.advanced') }}
+          </n-text>
+        </n-h5>
+        <a-descriptions :column="1" :data="detailDataAdvanced" size="large" />
       </div>
     </a-modal>
   </div>
@@ -320,9 +356,9 @@
   import {
     addTransaction,
     AddTransactionData,
+    getTransaction,
     listTransaction,
     ListTransactionData,
-    getTransaction,
   } from '@/api/transaction';
   import { useI18n } from 'vue-i18n';
   import { useUserStore } from '@/store';
@@ -436,36 +472,8 @@
   const clearAfterAdd = ref(false);
   const pageStatus = ref('success');
   const pageText = ref(t('text.default'));
-  const detailData = [
-    {
-      label: t('transactionId'),
-      value: '',
-    },
-    {
-      label: t('amount'),
-      value: '',
-    },
-    {
-      label: t('transactionDate'),
-      value: '',
-    },
-    {
-      label: t('status'),
-      value: '',
-    },
-    {
-      label: t('description'),
-      value: '',
-    },
-    {
-      label: t('createDate'),
-      value: '',
-    },
-    {
-      label: t('updateDate'),
-      value: '',
-    },
-  ];
+  let detailDataBasic = [];
+  let detailDataAdvanced = [];
 
   function useTemplate() {
     const date = new Date();
@@ -495,11 +503,44 @@
   }
 
   async function onView(id: string) {
-    await getTransaction(id).then((res) => {
+    await getTransaction(id).then((res: any) => {
       try {
         if (res.code === 20000) {
-          console.log('res.data', res.data);
-          // TODO 设置detailData
+          detailDataBasic = [
+            {
+              label: t('transactionId'),
+              value: res.data.transactionId,
+            },
+            {
+              label: t('amount'),
+              value: res.data.amount.toLocaleString('zh-CN', {
+                style: 'currency',
+                currency: 'CNY',
+              }),
+            },
+            {
+              label: t('transactionDate'),
+              value: res.data.transactionDate,
+            },
+            {
+              label: t('status'),
+              value: res.data.status,
+            },
+            {
+              label: t('description'),
+              value: res.data.description,
+            },
+          ];
+          detailDataAdvanced = [
+            {
+              label: t('createTime'),
+              value: res.data.createTime,
+            },
+            {
+              label: t('updateTime'),
+              value: res.data.updateTime,
+            },
+          ];
         }
       } catch (error) {
         Message.error(t('msg.get.error'));
@@ -531,7 +572,7 @@
       pageSize: pagination.pageSize,
     };
     setLoading(true);
-    listTransaction(listTransactionData).then((res) => {
+    listTransaction(listTransactionData).then((res: any) => {
       try {
         if (res.code === 20000) {
           data.splice(0, data.length, ...res.data.records);
@@ -574,7 +615,7 @@
       description: addFormModel.description,
     };
     setLoading(true);
-    addTransaction(addTransactionData).then((res) => {
+    addTransaction(addTransactionData).then((res: any) => {
       try {
         if (res.code === 20000) {
           Message.success(t('msg.add.success'));
