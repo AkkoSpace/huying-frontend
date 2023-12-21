@@ -23,6 +23,7 @@ export default {
   'ph.status': '请选择状态',
   'ph.description': '请输入描述',
   'ph.confirmReset': '是否重置？',
+  'ph.confirmDelete': '是否删除？',
   // 按钮
   'btn.search.reset': '重置',
   'btn.search.ok': '查询',
@@ -41,6 +42,8 @@ export default {
   'msg.add.validate': '请检查表单',
   'msg.add.success': '新增成功',
   'msg.list.error': '查询失败',
+  'msg.delete.success': '删除成功',
+  'msg.delete.error': '删除失败',
   // 提示
   'tip.template': '点击后使用模板',
   'tip.clear': '点击后清空',

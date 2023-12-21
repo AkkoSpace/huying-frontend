@@ -28,3 +28,7 @@ export function addTransaction(data: AddTransactionData) {
 export function getTransaction(id: string) {
   return axios.get('/api/transaction/get', { params: { id } });
 }
+
+export function deleteTransaction(id: string) {
+  return axios.post('/api/transaction/delete', { id });
+}

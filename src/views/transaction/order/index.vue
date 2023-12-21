@@ -20,25 +20,25 @@
                 <template #icon>
                   <icon-exclamation-circle-fill />
                 </template>
-                未付款
+                {{ t('orderStatus.0') }}
               </a-tag>
               <a-tag v-if="record.status == 1" color="green">
                 <template #icon>
                   <icon-check-circle-fill />
                 </template>
-                已付款
+                {{ t('orderStatus.1') }}
               </a-tag>
               <a-tag v-if="record.status == 2" color="gray">
                 <template #icon>
                   <icon-close-circle-fill />
                 </template>
-                已取消
+                {{ t('orderStatus.2') }}
               </a-tag>
               <a-tag v-if="record.status == 3" color="purple">
                 <template #icon>
                   <icon-minus-circle-fill />
                 </template>
-                已退款
+                {{ t('orderStatus.3') }}
               </a-tag>
             </template>
             <template #action="{ record }">
@@ -51,14 +51,21 @@
                     {{ t('btn.action.view') }}
                   </template>
                 </a-button>
-                <a-button size="mini" type="text" @click="onView(record.id)">
-                  <template #icon>
-                    <Delete1Icon mt-1 size="18px" />
-                  </template>
-                  <template #default>
-                    {{ t('btn.action.delete') }}
-                  </template>
-                </a-button>
+
+                <a-popconfirm
+                  :content="t('ph.confirmDelete')"
+                  type="error"
+                  @ok="onDelete(record.id)"
+                >
+                  <a-button size="mini" type="text">
+                    <template #icon>
+                      <Delete1Icon mt-1 size="18px" />
+                    </template>
+                    <template #default>
+                      {{ t('btn.action.delete') }}
+                    </template>
+                  </a-button>
+                </a-popconfirm>
               </div>
             </template>
             <template #pagination-left>
@@ -359,6 +366,8 @@
     getTransaction,
     listTransaction,
     ListTransactionData,
+    deleteTransaction,
+    DeleteTransactionData,
   } from '@/api/transaction';
   import { useI18n } from 'vue-i18n';
   import { useUserStore } from '@/store';
@@ -475,6 +484,33 @@
   let detailDataBasic = [];
   let detailDataAdvanced = [];
 
+  function doListTransaction() {
+    const listTransactionData: ListTransactionData = {
+      current: pagination.current,
+      pageSize: pagination.pageSize,
+    };
+    setLoading(true);
+    listTransaction(listTransactionData).then((res: any) => {
+      try {
+        if (res.code === 20000) {
+          data.splice(0, data.length, ...res.data.records);
+          pagination.total = Number(res.data.total);
+        }
+      } catch (error) {
+        Message.error(t('msg.list.error'));
+      } finally {
+        setLoading(false);
+        // 将data中的amount转换成人民币
+        forEach(data, (item: any) => {
+          item.amount = item.amount.toLocaleString('zh-CN', {
+            style: 'currency',
+            currency: 'CNY',
+          });
+        });
+      }
+    });
+  }
+
   function useTemplate() {
     const date = new Date();
     addFormModel.transactionId = date
@@ -548,6 +584,18 @@
     });
     isView.value = true;
   }
+  function onDelete(id: string) {
+    deleteTransaction(id).then((res: any) => {
+      try {
+        if (res.code === 20000) {
+          Message.success(t('msg.delete.success'));
+          doListTransaction();
+        }
+      } catch (error) {
+        Message.error(t('msg.delete.error'));
+      }
+    });
+  }
 
   function handleOk() {
     isView.value = false;
@@ -564,33 +612,6 @@
 
   function confirmReset() {
     addFormRef.value.resetFields();
-  }
-
-  function doListTransaction() {
-    const listTransactionData: ListTransactionData = {
-      current: pagination.current,
-      pageSize: pagination.pageSize,
-    };
-    setLoading(true);
-    listTransaction(listTransactionData).then((res: any) => {
-      try {
-        if (res.code === 20000) {
-          data.splice(0, data.length, ...res.data.records);
-          pagination.total = Number(res.data.total);
-        }
-      } catch (error) {
-        Message.error(t('msg.list.error'));
-      } finally {
-        setLoading(false);
-        // 将data中的amount转换成人民币
-        forEach(data, (item: any) => {
-          item.amount = item.amount.toLocaleString('zh-CN', {
-            style: 'currency',
-            currency: 'CNY',
-          });
-        });
-      }
-    });
   }
 
   function pageChange(page: number) {
