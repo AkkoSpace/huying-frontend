@@ -222,7 +222,6 @@
     userAccount: '',
     userPassword: '',
     checkPassword: '',
-    isEncrypt: false,
   });
   const userInfo = reactive({
     userAccount: loginConfig.value.userAccount,
@@ -257,13 +256,7 @@
     if (!errors) {
       setLoading(true);
       try {
-        const encryptValues = lodash.cloneDeep(values);
-        if (!loginConfig.value.isEncrypt) {
-          encryptValues.userPassword = encryptPassword(
-            encryptValues.userPassword
-          );
-        }
-        await userStore.login(encryptValues as LoginData);
+        await userStore.login(values as LoginData);
         const { redirect, ...othersQuery } = router.currentRoute.value.query;
         router.push({
           name: (redirect as string) || 'Workplace',
@@ -273,10 +266,12 @@
         });
         Message.success(t('login.form.login.success'));
         const { rememberPassword } = loginConfig.value;
-        const { userAccount, userPassword } = encryptValues;
-        loginConfig.value.userAccount = rememberPassword ? userAccount : '';
-        loginConfig.value.userPassword = rememberPassword ? userPassword : '';
-        loginConfig.value.isEncrypt = true;
+        loginConfig.value.userAccount = rememberPassword
+          ? values.userAccount
+          : '';
+        loginConfig.value.userPassword = rememberPassword
+          ? values.userPassword
+          : '';
       } catch (err) {
         errorMessage.value = (err as Error).message;
       } finally {

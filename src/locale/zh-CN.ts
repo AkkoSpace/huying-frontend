@@ -41,6 +41,7 @@ export default {
   'menu.exception': '异常页',
   'menu.form': '表单页',
   'menu.transaction': '交易',
+  'menu.transaction.order': '订单管理',
   'menu.profile': '详情页',
   'menu.visualization': '数据可视化',
   'menu.user': '个人中心',
