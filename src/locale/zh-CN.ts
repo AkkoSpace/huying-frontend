@@ -1,9 +1,8 @@
-import localeMessageBox from '@/components/message-box/locale/zh-CN';
 import localeLogin from '@/views/login/locale/zh-CN';
+import localeMessageBox from '@/components/message-box/locale/zh-CN';
 import localeNavbar from '@/components/navbar/locale/zh-CN';
-
 import localeWorkplace from '@/views/dashboard/workplace/locale/zh-CN';
-
+import localeTransactionOrder from '@/views/transaction/order/locale/zh-CN';
 import localeSettings from './zh-CN/settings';
 
 export default {
@@ -23,4 +22,5 @@ export default {
   ...localeMessageBox,
   ...localeLogin,
   ...localeWorkplace,
+  ...localeTransactionOrder,
 };
