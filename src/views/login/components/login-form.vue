@@ -207,9 +207,7 @@
   import { useStorage } from '@vueuse/core';
   import { useUserStore } from '@/store';
   import useLoading from '@/hooks/loading';
-  import { encryptPassword } from '@/utils/auth';
   import type { LoginData, RegisterData } from '@/api/user';
-  import lodash from 'lodash';
 
   const router = useRouter();
   const { t } = useI18n();
@@ -291,14 +289,7 @@
     if (!errors) {
       setLoading(true);
       try {
-        const encryptValues = lodash.cloneDeep(values);
-        encryptValues.userPassword = encryptPassword(
-          encryptValues.userPassword
-        );
-        encryptValues.checkPassword = encryptPassword(
-          encryptValues.checkPassword
-        );
-        await userStore.register(encryptValues as RegisterData);
+        await userStore.register(values as RegisterData);
         Message.success(t('login.form.register.success'));
         loginType.value = 'login';
         errorMessage.value = '';

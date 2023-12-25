@@ -16,11 +16,6 @@
   .body {
     display: flex;
     height: 100vh;
-    //background: linear-gradient(
-    //  135deg,
-    //  rgba(24, 144, 255, 0.7) 0%,
-    //  rgba(103, 58, 183, 0.5) 90%
-    //);
     background-image: url('https://gw.alipayobjects.com/zos/rmsportal/TVYTbAXWheQpRcWDaDMu.svg');
     background-color: var(--color-fill-1);
 

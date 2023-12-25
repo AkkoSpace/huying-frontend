@@ -1,7 +1,5 @@
 <template>
-  <a-layout-footer class="footer"
-    >互盈 design by Akko For Mama</a-layout-footer
-  >
+  <a-layout-footer class="footer">互盈 design by Akko For Mama</a-layout-footer>
 </template>
 
 <script lang="ts" setup></script>
