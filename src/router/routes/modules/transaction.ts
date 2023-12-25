@@ -1,20 +1,20 @@
 import { DEFAULT_LAYOUT } from '../base';
 import { AppRouteRecordRaw } from '../types';
 
-const FORM: AppRouteRecordRaw = {
+const TRANSACTION: AppRouteRecordRaw = {
   path: '/transaction',
   name: 'transaction',
   component: DEFAULT_LAYOUT,
   meta: {
     locale: 'menu.transaction',
-    icon: 'icon-calendar-clock',
     requiresAuth: true,
-    order: 3,
+    icon: 'icon-list',
+    order: 1,
   },
   children: [
     {
-      path: 'order',
-      name: 'Order',
+      path: 'transaction-order', // The midline path complies with SEO specifications
+      name: 'TransactionOrder',
       component: () => import('@/views/transaction/order/index.vue'),
       meta: {
         locale: 'menu.transaction.order',
@@ -25,4 +25,4 @@ const FORM: AppRouteRecordRaw = {
   ],
 };
 
-export default FORM;
+export default TRANSACTION;
