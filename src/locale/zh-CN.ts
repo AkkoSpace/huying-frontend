@@ -1,5 +1,6 @@
 import localeMessageBox from '@/components/message-box/locale/zh-CN';
 import localeLogin from '@/views/login/locale/zh-CN';
+import localeNavbar from '@/components/navbar/locale/zh-CN';
 
 import localeWorkplace from '@/views/dashboard/workplace/locale/zh-CN';
 
@@ -17,11 +18,9 @@ export default {
   'menu.profile': '详情页',
   'menu.visualization': '数据可视化',
   'menu.user': '个人中心',
-  'menu.arcoWebsite': 'Arco Design',
-  'menu.faq': '常见问题',
-  'navbar.docs': '文档中心',
   'navbar.action.locale': '切换为中文',
   ...localeSettings,
+  ...localeNavbar,
   ...localeMessageBox,
   ...localeLogin,
   ...localeWorkplace,
