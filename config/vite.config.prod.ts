@@ -1,4 +1,5 @@
 import { mergeConfig } from 'vite';
+import UnoCSS from 'unocss/vite';
 import baseConfig from './vite.config.base';
 import configCompressPlugin from './plugin/compress';
 import configVisualizerPlugin from './plugin/visualizer';
@@ -9,6 +10,7 @@ export default mergeConfig(
   {
     mode: 'production',
     plugins: [
+      UnoCSS(),
       configCompressPlugin('gzip'),
       configVisualizerPlugin(),
       configArcoResolverPlugin(),
