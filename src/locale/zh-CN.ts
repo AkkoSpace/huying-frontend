@@ -3,6 +3,7 @@ import localeMessageBox from '@/components/message-box/locale/zh-CN';
 import localeNavbar from '@/components/navbar/locale/zh-CN';
 import localeWorkplace from '@/views/dashboard/workplace/locale/zh-CN';
 import localeTransactionOrder from '@/views/transaction/order/locale/zh-CN';
+import localeProductsList from '@/views/products/list/locale/zh-CN';
 import localeSettings from './zh-CN/settings';
 
 export default {
@@ -23,4 +24,5 @@ export default {
   ...localeLogin,
   ...localeWorkplace,
   ...localeTransactionOrder,
+  ...localeProductsList,
 };

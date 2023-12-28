@@ -136,101 +136,104 @@
         </a-table>
       </a-card>
     </div>
-  </div>
-  <a-modal v-model:visible="saveVisible" :closable="false" :footer="false">
-    <div>
-      <a-row flex>
-        <div flex-1 justify-start>
-          <n-h4 align-text ml-4 prefix="bar" type="success">
-            <n-text v-if="saveType === 'add'" type="success">
-              {{ $t('title.add') }}
-            </n-text>
-            <n-text v-else type="success">
-              {{ $t('title.edit') }}
-            </n-text>
-          </n-h4>
-        </div>
-        <div justify-end>
-          <a-radio-group v-model="radioValue" :options="radioOptions" />
-        </div>
-      </a-row>
-      <a-form
-        ref="saveFormRef"
-        :model="saveFormModel"
-        :rules="saveFormRules"
-        asterisk-position="start"
-      >
-        <a-form-item
-          :label="t('transactionOrder')"
-          :validate-trigger="['change', 'blur']"
-          asterisk-position="end"
-          field="transactionOrder"
+    <a-modal v-model:visible="saveVisible" :closable="false" :footer="false">
+      <div>
+        <a-row flex>
+          <div flex-1 justify-start>
+            <n-h4 align-text ml-4 prefix="bar" type="success">
+              <n-text v-if="saveType === 'add'" type="success">
+                {{ $t('title.add') }}
+              </n-text>
+              <n-text v-else type="success">
+                {{ $t('title.edit') }}
+              </n-text>
+            </n-h4>
+          </div>
+          <div justify-end>
+            <a-radio-group v-model="radioValue" :options="radioOptions" />
+          </div>
+        </a-row>
+        <a-form
+          ref="saveFormRef"
+          :model="saveFormModel"
+          :rules="saveFormRules"
+          asterisk-position="start"
         >
-          <a-input
-            v-model="saveFormModel.transactionOrder"
-            :placeholder="t('ph.transactionOrder')"
+          <a-form-item
+            :label="t('transactionOrder')"
+            :validate-trigger="['change', 'blur']"
+            asterisk-position="end"
+            field="transactionOrder"
           >
-            <template #prepend> XD</template>
-          </a-input>
-        </a-form-item>
-        <a-form-item
-          :label="t('amount')"
-          :validate-trigger="['change', 'blur']"
-          asterisk-position="end"
-          field="amount"
-        >
-          <a-input v-model="saveFormModel.amount" :placeholder="t('ph.amount')">
-            <template #append> RMB</template>
-          </a-input>
-        </a-form-item>
-        <a-form-item
-          :label="t('transactionDate')"
-          :validate-trigger="['change', 'blur']"
-          asterisk-position="end"
-          field="transactionDate"
-        >
-          <a-date-picker
-            v-model="saveFormModel.transactionDate"
-            style="width: 100%"
-          />
-        </a-form-item>
-        <a-form-item
-          :label="t('status')"
-          :validate-trigger="['change', 'blur']"
-          asterisk-position="end"
-          field="status"
-        >
-          <a-select
-            v-model="saveFormModel.status"
-            :placeholder="t('ph.status')"
+            <a-input
+              v-model="saveFormModel.transactionOrder"
+              :placeholder="t('ph.transactionOrder')"
+            >
+              <template #prepend> XD</template>
+            </a-input>
+          </a-form-item>
+          <a-form-item
+            :label="t('amount')"
+            :validate-trigger="['change', 'blur']"
+            asterisk-position="end"
+            field="amount"
           >
-            <a-option v-for="item in orderStatus" :key="item" :value="item">
-              {{ item.label }}
-            </a-option>
-          </a-select>
-        </a-form-item>
-        <a-form-item
-          :hide-asterisk="true"
-          :label="t('description')"
-          field="status"
-          validate-trigger="blur"
-        >
-          <a-input
-            v-model="saveFormModel.description"
-            :placeholder="t('ph.description')"
-          />
-        </a-form-item>
-      </a-form>
-      <div flex justify-end>
-        <a-button class="mr" type="secondary">
-          {{ t('btn.cancel') }}
-        </a-button>
-        <a-button type="primary" @click="doListTransaction">
-          {{ t('btn.ok') }}
-        </a-button>
+            <a-input
+              v-model="saveFormModel.amount"
+              :placeholder="t('ph.amount')"
+            >
+              <template #append> RMB</template>
+            </a-input>
+          </a-form-item>
+          <a-form-item
+            :label="t('transactionDate')"
+            :validate-trigger="['change', 'blur']"
+            asterisk-position="end"
+            field="transactionDate"
+          >
+            <a-date-picker
+              v-model="saveFormModel.transactionDate"
+              style="width: 100%"
+            />
+          </a-form-item>
+          <a-form-item
+            :label="t('status')"
+            :validate-trigger="['change', 'blur']"
+            asterisk-position="end"
+            field="status"
+          >
+            <a-select
+              v-model="saveFormModel.status"
+              :placeholder="t('ph.status')"
+            >
+              <a-option v-for="item in orderStatus" :key="item" :value="item">
+                {{ item.label }}
+              </a-option>
+            </a-select>
+          </a-form-item>
+          <a-form-item
+            :hide-asterisk="true"
+            :label="t('description')"
+            field="status"
+            validate-trigger="blur"
+          >
+            <a-input
+              v-model="saveFormModel.description"
+              :placeholder="t('ph.description')"
+            />
+          </a-form-item>
+        </a-form>
+        <div flex justify-end>
+          <a-button class="mr" type="secondary">
+            {{ t('btn.cancel') }}
+          </a-button>
+          <a-button type="primary" @click="doListTransaction">
+            {{ t('btn.confirm') }}
+          </a-button>
+        </div>
       </div>
-    </div>
-  </a-modal>
+    </a-modal>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -239,6 +242,7 @@
   import useLoading from '@/hooks/loading';
   import { Message } from '@arco-design/web-vue';
   import { forEach } from 'lodash';
+  import { BrowseIcon, Delete1Icon } from 'tdesign-icons-vue-next';
   import {
     listTransaction,
     ListTransactionData,
@@ -396,6 +400,14 @@
 
   const confirmSave = () => {
     saveVisible.value = false;
+  };
+
+  const onView = (id: string) => {
+    console.log(id);
+  };
+
+  const onDelete = (id: string) => {
+    console.log(id);
   };
 
   function pageChange(page: number) {
