@@ -1,9 +1,8 @@
 import localeMessageBox from '@/components/message-box/locale/en-US';
 import localeLogin from '@/views/login/locale/en-US';
 import localeNavbar from '@/components/navbar/locale/en-US';
-
+import localeTransactionOrder from '@/views/transaction/order/locale/zh-CN';
 import localeWorkplace from '@/views/dashboard/workplace/locale/en-US';
-
 import localeSettings from './en-US/settings';
 
 export default {
@@ -23,4 +22,5 @@ export default {
   ...localeMessageBox,
   ...localeLogin,
   ...localeWorkplace,
+  ...localeTransactionOrder,
 };

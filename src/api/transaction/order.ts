@@ -3,7 +3,7 @@ import axios from 'axios';
 export interface ListTransactionData {
   current: number;
   pageSize: number;
-  transactionId?: string;
+  transactionOrder?: string;
   transactionDate?: string;
   amount?: number;
 }
@@ -14,7 +14,7 @@ export function listTransaction(data: ListTransactionData) {
 
 export interface AddTransactionData {
   userId: string | undefined;
-  transactionId: string;
+  transactionOrder: string;
   transactionDate: string;
   amount: number;
   status: number;
