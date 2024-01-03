@@ -23,11 +23,14 @@ export default {
   'ph.amount': '请输入交易金额',
   'ph.status': '请选择订单状态',
   'ph.description': '请输入订单描述',
+  'ph.confirmDelete': '确定删除该订单吗？',
   // 按钮文本
   'btn.search': '查询',
   'btn.reset': '重置',
   'btn.add': '新增',
-  'btn.ok': '确定',
+  'btn.confirm': '确定',
   'btn.cancel': '取消',
   'btn.batchOperation': '批量操作',
+  'btn.action.view': '查看',
+  'btn.action.delete': '删除',
 };
