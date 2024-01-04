@@ -8,7 +8,7 @@ const SUPPLIER: AppRouteRecordRaw = {
   meta: {
     locale: 'menu.supplier',
     requiresAuth: true,
-    icon: 'icon-dashboard',
+    icon: 'icon-relation',
     order: 3,
   },
   children: [

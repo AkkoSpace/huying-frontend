@@ -8,7 +8,7 @@ const WAREHOUSE: AppRouteRecordRaw = {
   meta: {
     locale: 'menu.warehouse',
     requiresAuth: true,
-    icon: 'icon-dashboard',
+    icon: 'icon-home',
     order: 2,
   },
   children: [

@@ -8,7 +8,7 @@ const PURCHASE: AppRouteRecordRaw = {
   meta: {
     locale: 'menu.purchase',
     requiresAuth: true,
-    icon: 'icon-dashboard',
+    icon: 'icon-stamp',
     order: 4,
   },
   children: [
