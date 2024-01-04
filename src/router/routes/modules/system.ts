@@ -1,15 +1,15 @@
 import { DEFAULT_LAYOUT } from '../base';
 import { AppRouteRecordRaw } from '../types';
 
-const COMPANIES: AppRouteRecordRaw = {
+const SYSTEM: AppRouteRecordRaw = {
   path: '/system',
-  name: 'system',
+  name: 'System',
   component: DEFAULT_LAYOUT,
   meta: {
     locale: 'menu.system',
     requiresAuth: true,
     icon: 'icon-dashboard',
-    order: 4,
+    order: 9,
   },
   children: [
     {
@@ -23,11 +23,11 @@ const COMPANIES: AppRouteRecordRaw = {
       },
     },
     {
-      path: 'users',
-      name: 'Users',
-      component: () => import('@/views/system/users/index.vue'),
+      path: 'user',
+      name: 'User',
+      component: () => import('@/views/system/user/index.vue'),
       meta: {
-        locale: 'menu.system.users',
+        locale: 'menu.system.user',
         requiresAuth: true,
         roles: ['admin'],
       },
@@ -35,4 +35,4 @@ const COMPANIES: AppRouteRecordRaw = {
   ],
 };
 
-export default COMPANIES;
+export default SYSTEM;
