@@ -1,10 +1,10 @@
 <template>
   <div h-full px-4 pt-4>
     <a-card h-full>
-      <n-h3 prefix="bar">
-        <n-text type="success">
+      <n-h3 prefix="bar" type="info">
+        <a-typography-text>
           {{ $t('title.product') }}
-        </n-text>
+        </a-typography-text>
       </n-h3>
       <a-tabs type="rounded">
         <a-tab-pane key="1" :title="$t('tab.title.info')">
