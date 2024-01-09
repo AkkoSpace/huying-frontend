@@ -3,7 +3,6 @@ export default {
   'menu.product': 'Product',
   'menu.product.info': 'Info',
   'menu.product.price': 'Price',
-  'menu.product.category': 'Category',
   'menu.warehouse': 'Warehouse',
   'menu.warehouse.info': 'Info',
   'menu.supplier': 'Supplier',

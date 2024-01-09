@@ -3,7 +3,6 @@ export default {
   'menu.product': '产品管理',
   'menu.product.info': '产品信息',
   'menu.product.price': '产品价格',
-  'menu.product.category': '产品分类',
   'menu.warehouse': '仓库管理',
   'menu.warehouse.info': '仓库信息',
   'menu.supplier': '供应商管理',

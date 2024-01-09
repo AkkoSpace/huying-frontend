@@ -20,6 +20,7 @@ declare module '@vue/runtime-core' {
     MessageBox: typeof import('./src/components/message-box/index.vue')['default']
     Navbar: typeof import('./src/components/navbar/index.vue')['default']
     NDataTable: typeof import('naive-ui')['NDataTable']
+    NH3: typeof import('naive-ui')['NH3']
     NH4: typeof import('naive-ui')['NH4']
     NText: typeof import('naive-ui')['NText']
     RouterLink: typeof import('vue-router')['RouterLink']

@@ -32,37 +32,37 @@ export interface updatePasswordData {
 }
 
 export function register(data: RegisterData) {
-  return axios.post<LoginRes>('/api/user/register', data);
+  return axios.post<LoginRes>('/user/register', data);
 }
 
 export function login(data: LoginData) {
-  return axios.post<LoginRes>('/api/user/login', data);
+  return axios.post<LoginRes>('/user/login', data);
 }
 
 export function logout() {
-  return axios.post<LoginRes>('/api/user/logout');
+  return axios.post<LoginRes>('/user/logout');
 }
 
 export function updatePassword(data: updatePasswordData) {
-  return axios.post('/api/user/update/password', data);
+  return axios.post('/user/update/password', data);
 }
 
 export function deleteUser(data: DeleteData) {
-  return axios.post('/api/user/delete', data);
+  return axios.post('/user/delete', data);
 }
 
 export function auth() {
-  return axios.post('/api/user/auth');
+  return axios.post('/user/auth');
 }
 
 export function getUserInfo() {
-  return axios.get<UserState>('/api/user/info');
+  return axios.get<UserState>('/user/info');
 }
 
 export function updateUserInfo(data: InfoData) {
-  return axios.post('/api/user/update/info', data);
+  return axios.post('/user/update/info', data);
 }
 
 export function getMenuList() {
-  return axios.post<RouteRecordNormalized[]>('/api/user/menu');
+  return axios.post<RouteRecordNormalized[]>('/user/menu');
 }

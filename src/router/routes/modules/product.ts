@@ -32,16 +32,6 @@ const PRODUCT: AppRouteRecordRaw = {
         roles: ['*'],
       },
     },
-    {
-      path: 'category',
-      name: 'ProductCategory',
-      component: () => import('@/views/product/category/index.vue'),
-      meta: {
-        locale: 'menu.product.category',
-        requiresAuth: true,
-        roles: ['*'],
-      },
-    },
   ],
 };
 
