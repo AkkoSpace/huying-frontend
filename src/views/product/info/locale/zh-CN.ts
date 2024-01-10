@@ -7,6 +7,7 @@ export default {
 
   'tab.title.brand': '品牌信息',
   'product.brand.add': '点击新增品牌',
+  'product.brand.edit': '点击编辑品牌',
   'product.brand.name': '品牌名称',
   'product.brand.confirm': '确定',
   'product.brand.cancel': '取消',
@@ -16,4 +17,7 @@ export default {
   'product.brand.rules.brandName.max': '品牌名称不能超过20个字符',
 
   'tab.title.category': '分类信息',
+
+  'content.delete': '确定要删除吗？',
+  'message.delete.success': '删除成功',
 };
