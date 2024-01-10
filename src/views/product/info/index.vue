@@ -11,10 +11,10 @@
           <Info />
         </a-tab-pane>
         <a-tab-pane key="2" :title="$t('tab.title.brand')">
-          <Brand />
+          <Category />
         </a-tab-pane>
         <a-tab-pane key="3" :title="$t('tab.title.category')">
-          <Category />
+          <Brand />
         </a-tab-pane>
       </a-tabs>
     </a-card>

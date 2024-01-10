@@ -38,7 +38,9 @@
   <a-modal
     v-model:visible="isSave"
     :footer="false"
-    :title="isAdd ? $t('product.brand.add') : $t('product.brand.edit')"
+    :title="
+      isAdd ? $t('product.brand.title.add') : $t('product.brand.title.edit')
+    "
     :width="350"
   >
     <a-form ref="formRef" :model="form" auto-label-width>
@@ -62,13 +64,13 @@
     </a-form>
     <a-space flex justify-end>
       <a-button @click="cancelSave">
-        {{ $t('product.brand.cancel') }}
+        {{ $t('product.cancel') }}
       </a-button>
       <a-button v-if="isAdd" type="primary" @click="confirmAdd">
-        {{ $t('product.brand.confirm') }}
+        {{ $t('product.confirm') }}
       </a-button>
-      <a-button v-if="!isAdd" type="primary" @click="confirmEdit">
-        {{ $t('product.brand.confirm') }}
+      <a-button v-else type="primary" @click="confirmEdit">
+        {{ $t('product.confirm') }}
       </a-button>
     </a-space>
   </a-modal>
