@@ -9,11 +9,19 @@ export interface updateProductBrandData {
   brandName: string;
 }
 
+export interface addProductCategoryData {
+  productAttribute: string;
+  productType: string;
+}
+
+export interface updateProductCategoryData {
+  id: number;
+  productAttribute: string;
+  productType: string;
+}
+
 export function getProductInfo() {
   return axios.get('/basic/product');
-}
-export function getProductBrand() {
-  return axios.get('/basic/productBrand');
 }
 
 export function addProductBrand(data: addProductBrandData) {
@@ -26,6 +34,22 @@ export function deleteProductBrand(id: number) {
 
 export function updateProductBrand(data: updateProductBrandData) {
   return axios.put(`/basic/productBrand`, data);
+}
+
+export function getProductBrand() {
+  return axios.get('/basic/productBrand');
+}
+
+export function addProductCategory(data: addProductCategoryData) {
+  return axios.post('/basic/productCategory', data);
+}
+
+export function deleteProductCategory(id: number) {
+  return axios.delete(`/basic/productCategory/${id}`);
+}
+
+export function updateProductCategory(data: updateProductCategoryData) {
+  return axios.put(`/basic/productCategory`, data);
 }
 
 export function getProductCategory() {

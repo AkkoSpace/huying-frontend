@@ -136,12 +136,10 @@
       if (!vaild) {
         await addProductBrand(form.value).then((res: any) => {
           if (res.code === 20000) {
-            form.value = {
-              brandName: '',
-            };
             getData();
             isSave.value = false;
             isAdd.value = false;
+            formRef.value.resetFields();
           }
         });
       }
@@ -156,12 +154,10 @@
           ...form.value,
         }).then((res: any) => {
           if (res.code === 20000) {
-            form.value = {
-              brandName: '',
-            };
             getData();
             isSave.value = false;
             isAdd.value = false;
+            formRef.value.resetFields();
           }
         });
       }

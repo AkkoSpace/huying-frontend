@@ -1,19 +1,19 @@
 <template>
-  <div h-full px-4 pt-4>
+  <div h-full pt-4 px-4>
     <a-card h-full>
       <n-h3 prefix="bar" type="info">
         <a-typography-text>
-          {{ $t('title.product') }}
+          {{ $t('text.productInfo') }}
         </a-typography-text>
       </n-h3>
       <a-tabs type="rounded">
-        <a-tab-pane key="1" :title="$t('tab.title.info')">
+        <a-tab-pane key="1" :title="$t('title.info')">
           <Info />
         </a-tab-pane>
-        <a-tab-pane key="2" :title="$t('tab.title.brand')">
+        <a-tab-pane key="2" :title="$t('title.category')">
           <Category />
         </a-tab-pane>
-        <a-tab-pane key="3" :title="$t('tab.title.category')">
+        <a-tab-pane key="3" :title="$t('title.brand')">
           <Brand />
         </a-tab-pane>
       </a-tabs>
@@ -25,10 +25,6 @@
   import Info from '@/views/product/info/components/Info.vue';
   import Brand from '@/views/product/info/components/Brand.vue';
   import Category from '@/views/product/info/components/Category.vue';
-
-  import { useI18n } from 'vue-i18n';
-
-  const { t } = useI18n();
 </script>
 
 <script lang="ts">
