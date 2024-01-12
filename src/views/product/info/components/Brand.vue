@@ -4,7 +4,7 @@
       <a-card flex h-xs items-center justify-center w-full @click="onAdd">
         <a-row>
           <a-typography-text>
-            {{ $t('product.brand.add') }}
+            {{ $t('text.brand.add') }}
           </a-typography-text>
         </a-row>
         <a-row justify-center mt>

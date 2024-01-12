@@ -1,5 +1,27 @@
 import axios from 'axios';
 
+export interface addProductInfoData {
+  brandId: string;
+  categoryId: string;
+  productName: string;
+  barCode: string;
+  productSpec: string;
+  productUnit: string;
+  purchasePrice: string;
+  standardPrice: string;
+}
+
+export interface updateProductInfoData {
+  id: number;
+  brandId: string;
+  categoryId: string;
+  productName: string;
+  barCode: string;
+  productSpec: string;
+  productUnit: string;
+  purchasePrice: string;
+  standardPrice: string;
+}
 export interface addProductBrandData {
   brandName: string;
 }
@@ -18,6 +40,18 @@ export interface updateProductCategoryData {
   id: number;
   productAttribute: string;
   productType: string;
+}
+
+export function addProductInfo(data: addProductInfoData) {
+  return axios.post('/basic/product', data);
+}
+
+export function deleteProductInfo(id: number) {
+  return axios.delete(`/basic/product/${id}`);
+}
+
+export function updateProductInfo(data: updateProductInfoData) {
+  return axios.put(`/basic/product`, data);
 }
 
 export function getProductInfo() {
