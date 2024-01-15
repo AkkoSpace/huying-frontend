@@ -360,8 +360,8 @@
     });
   };
 
-  const brandList = ref();
-  const categoryList = ref();
+  const brandList = ref([]);
+  const categoryList = ref([]);
   function getListData() {
     getProductBrand().then((res) => {
       brandList.value = res.data;

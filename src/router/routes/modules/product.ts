@@ -3,7 +3,7 @@ import { AppRouteRecordRaw } from '../types';
 
 const PRODUCT: AppRouteRecordRaw = {
   path: '/product',
-  name: 'product',
+  name: 'Product',
   component: DEFAULT_LAYOUT,
   meta: {
     locale: 'menu.product',

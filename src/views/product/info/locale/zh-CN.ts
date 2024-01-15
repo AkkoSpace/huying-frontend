@@ -54,6 +54,4 @@ export default {
   'rules.category.productAttribute.max': '产品属性不能超过10个字符',
   'rules.category.productType.required': '产品类型不能为空',
   'rules.category.productType.max': '产品类型不能超过10个字符',
-  'rules.brand.brandName.required': '品牌名称不能为空',
-  'rules.brand.brandName.max': '品牌名称不能超过20个字符',
 };
