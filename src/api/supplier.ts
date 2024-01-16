@@ -12,17 +12,17 @@ export interface updateSupplierData {
 }
 
 export function addSupplier(data: addSupplierData) {
-  return axios.post('/basic/supplier', data);
+  return axios.post('/purchase/supplier', data);
 }
 
 export function deleteSupplier(id: number) {
-  return axios.delete(`/basic/supplier/${id}`);
+  return axios.delete(`/purchase/supplier/${id}`);
 }
 
 export function updateSupplier(data: updateSupplierData) {
-  return axios.put(`/basic/supplier`, data);
+  return axios.put(`/purchase/supplier`, data);
 }
 
 export function getSupplier() {
-  return axios.get('/basic/supplier');
+  return axios.get('/purchase/supplier');
 }
