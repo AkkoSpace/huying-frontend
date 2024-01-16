@@ -17,6 +17,7 @@ export default mergeConfig(
       fs: {
         strict: true,
       },
+      strictPort: true,
     },
     plugins: [
       UnoCSS(),

@@ -4,6 +4,7 @@ import localeNavbar from '@/components/navbar/locale/en-US';
 import localeWorkplace from '@/views/dashboard/workplace/locale/en-US';
 import localeProductInfo from '@/views/product/info/locale/en-US';
 import localeWarehouseInfo from '@/views/warehouse/info/locale/en-US';
+import localeSupplierInfo from '@/views/supplier/info/locale/en-US';
 import localeSettings from './en-US/settings';
 // @ts-ignore
 import localeMenu from './en-US/menu';
@@ -17,4 +18,5 @@ export default {
   ...localeMenu,
   ...localeProductInfo,
   ...localeWarehouseInfo,
+  ...localeSupplierInfo,
 };
