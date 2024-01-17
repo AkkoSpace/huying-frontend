@@ -1,13 +1,5 @@
 export default {
-  // 通用
-  'text.confirm': '确定',
-  'text.cancel': '取消',
-  'content.delete': '确定要删除吗？',
-  'message.delete.success': '删除成功',
   // 按钮
-  'btn.view': '查看',
-  'btn.edit': '编辑',
-  'btn.delete': '删除',
   'btn.info.add': '添加产品',
   'btn.category.add': '添加分类',
   // 文本
@@ -37,6 +29,9 @@ export default {
   'title.category.productAttribute': '产品属性',
   'title.category.productType': '产品类型',
   'title.brand': '产品品牌',
+  'title.brand.add': '添加产品品牌',
+  'title.brand.edit': '编辑产品品牌',
+  'title.brand.brandName': '品牌名称',
   // 占位文本
   'ph.info.brandId': '请选择品牌',
   'ph.info.categoryId': '请选择分类',
@@ -46,12 +41,25 @@ export default {
   'ph.info.productUnit': '请选择或输入单位',
   'ph.info.purchasePrice': '请输入进价',
   'ph.info.standardPrice': '请输入标准售价',
-  'ph.brandName': '请输入品牌名称',
   'ph.category.productAttribute': '请输入产品属性',
   'ph.category.productType': '请输入产品类型',
+  'ph.brand.brandName': '请输入品牌名称',
   // 校验规则
+  'rules.info.brandId.required': '品牌不能为空',
+  'rules.info.categoryId.required': '分类不能为空',
+  'rules.info.productName.required': '产品名称不能为空',
+  'rules.info.productName.max': '产品名称不能超过20个字符',
+  'rules.info.barCode.max': '条形码不能超过20个字符',
+  'rules.info.productSpec.required': '规格不能为空',
+  'rules.info.productSpec.max': '规格不能超过20个字符',
+  'rules.info.productUnit.required': '单位不能为空',
+  'rules.info.productUnit.max': '单位不能超过1个字符',
+  'rules.info.purchasePrice.required': '进价不能为空',
+  'rules.info.standardPrice.required': '标准售价不能为空',
   'rules.category.productAttribute.required': '产品属性不能为空',
   'rules.category.productAttribute.max': '产品属性不能超过10个字符',
   'rules.category.productType.required': '产品类型不能为空',
   'rules.category.productType.max': '产品类型不能超过10个字符',
+  'rules.brand.brandName.required': '品牌名称不能为空',
+  'rules.brand.brandName.max': '品牌名称不能超过10个字符',
 };

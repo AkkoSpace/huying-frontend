@@ -16,10 +16,10 @@
           <template #icon>
             <icon-eye />
           </template>
-          {{ $t('btn.view') }}
+          {{ $t('common.btn.view') }}
         </a-button>
         <a-popconfirm
-          :content="$t('content.delete')"
+          :content="$t('common.content.delete')"
           position="left"
           type="warning"
           @ok="confirmDelete(record.id)"
@@ -28,7 +28,7 @@
             <template #icon>
               <icon-delete />
             </template>
-            {{ $t('btn.delete') }}
+            {{ $t('common.btn.delete') }}
           </a-button>
         </a-popconfirm>
       </template>
@@ -42,7 +42,7 @@
   >
     <a-form ref="formRef" :model="form" auto-label-width>
       <a-form-item
-        :label="$t('label.category.productAttribute')"
+        :label="$t('title.category.productAttribute')"
         :rules="[
           {
             required: true,
@@ -62,7 +62,7 @@
         />
       </a-form-item>
       <a-form-item
-        :label="$t('label.category.productType')"
+        :label="$t('title.category.productType')"
         :rules="[
           {
             required: true,

@@ -24,7 +24,7 @@
             <icon-edit @click="onEdit(item.id, item.brandName)" />
           </span>
           <a-popconfirm
-            :content="$t('content.delete')"
+            :content="$t('common.content.delete')"
             position="bottom"
             type="warning"
             @ok="confirmDelete(item.id)"
@@ -38,39 +38,37 @@
   <a-modal
     v-model:visible="isSave"
     :footer="false"
-    :title="
-      isAdd ? $t('product.brand.title.add') : $t('product.brand.title.edit')
-    "
+    :title="isAdd ? $t('title.brand.add') : $t('title.brand.edit')"
     :width="350"
   >
     <a-form ref="formRef" :model="form" auto-label-width>
       <a-form-item
-        :label="$t('product.brand.label.brandName')"
+        :label="$t('title.brand.brandName')"
         :rules="[
           {
             required: true,
-            message: $t('product.brand.rules.brandName.required'),
+            message: $t('rules.brand.brandName.required'),
           },
-          { max: 10, message: $t('product.brand.rules.brandName.max') },
+          { max: 10, message: $t('rules.brand.brandName.max') },
         ]"
         :validate-trigger="['change', 'blur']"
         field="brandName"
       >
         <a-input
           v-model="form.brandName"
-          :placeholder="$t('product.brand.ph.brandName')"
+          :placeholder="$t('ph.brand.brandName')"
         />
       </a-form-item>
     </a-form>
     <a-space flex justify-end>
       <a-button @click="cancelSave">
-        {{ $t('product.cancel') }}
+        {{ $t('common.text.cancel') }}
       </a-button>
       <a-button v-if="isAdd" type="primary" @click="confirmAdd">
-        {{ $t('product.confirm') }}
+        {{ $t('common.text.confirm') }}
       </a-button>
       <a-button v-else type="primary" @click="confirmEdit">
-        {{ $t('product.confirm') }}
+        {{ $t('common.text.confirm') }}
       </a-button>
     </a-space>
   </a-modal>

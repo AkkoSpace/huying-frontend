@@ -6,16 +6,17 @@ import localeProductInfo from '@/views/product/info/locale/zh-CN';
 import localeWarehouseInfo from '@/views/warehouse/info/locale/zh-CN';
 import localeSupplierInfo from '@/views/supplier/info/locale/zh-CN';
 import localeSettings from './zh-CN/settings';
-// @ts-ignore
 import localeMenu from './zh-CN/menu';
+import localeCommon from './zh-CN/common';
 
 export default {
+  ...localeCommon,
   ...localeSettings,
+  ...localeMenu,
   ...localeNavbar,
   ...localeMessageBox,
   ...localeLogin,
   ...localeWorkplace,
-  ...localeMenu,
   ...localeProductInfo,
   ...localeWarehouseInfo,
   ...localeSupplierInfo,

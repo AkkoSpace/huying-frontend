@@ -28,10 +28,10 @@
           <template #icon>
             <icon-eye />
           </template>
-          {{ $t('btn.view') }}
+          {{ $t('common.btn.view') }}
         </a-button>
         <a-popconfirm
-          :content="$t('content.delete')"
+          :content="$t('common.content.delete')"
           position="left"
           type="warning"
           @ok="confirmDelete(record.id)"
@@ -40,7 +40,7 @@
             <template #icon>
               <icon-delete />
             </template>
-            {{ $t('btn.delete') }}
+            {{ $t('common.btn.delete') }}
           </a-button>
         </a-popconfirm>
       </template>
@@ -213,13 +213,13 @@
     </a-form>
     <a-space flex justify-end>
       <a-button @click="cancelSave">
-        {{ $t('text.cancel') }}
+        {{ $t('common.text.cancel') }}
       </a-button>
       <a-button v-if="isAdd" type="primary" @click="confirmAdd">
-        {{ $t('text.confirm') }}
+        {{ $t('common.text.confirm') }}
       </a-button>
       <a-button v-else type="primary" @click="confirmEdit">
-        {{ $t('text.confirm') }}
+        {{ $t('common.text.confirm') }}
       </a-button>
     </a-space>
   </a-modal>
@@ -293,8 +293,8 @@
     barCode: '',
     productSpec: '',
     productUnit: '',
-    purchasePrice: '',
-    standardPrice: '',
+    purchasePrice: 0,
+    standardPrice: 0,
   });
 
   function getData() {
