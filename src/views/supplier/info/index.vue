@@ -31,7 +31,7 @@
                 {{ item.supplierAddress }}
               </a-typography-title>
             </a-row>
-            <a-row justify-between mt>
+            <a-row justify-center mt>
               <span mr>
                 <icon-edit @click="onEdit(item.id, item.supplierName)" />
               </span>
