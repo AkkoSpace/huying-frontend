@@ -13,9 +13,9 @@ export default {
   'ph.warehouseName': '请输入仓库名称',
   'ph.warehouseAddress': '请输入仓库地址',
   // 校验规则
-  'rules.warehouseName': '请输入仓库名称',
+  'rules.warehouseName.require': '仓库名称不能为空',
   'rules.warehouseName.max': '仓库名称最多输入10个字符',
-  'rules.warehouseAddress': '请输入仓库地址',
+  'rules.warehouseAddress.require': '仓库地址不能为空',
   'rules.warehouseAddress.max': '仓库地址最多输入50个字符',
-  'rules.warehouseStatus': '请选择仓库状态',
+  'rules.warehouseStatus.require': '请选择仓库状态',
 };

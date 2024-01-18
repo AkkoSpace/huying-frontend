@@ -11,18 +11,18 @@ export interface updateSupplierData {
   supplierAddress: string;
 }
 
-export function addSupplier(data: addSupplierData) {
-  return axios.post('/purchase/supplier', data);
+export function getSupplier() {
+  return axios.get('/purchase/supplier');
 }
 
-export function deleteSupplier(id: number) {
-  return axios.delete(`/purchase/supplier/${id}`);
+export function addSupplier(data: addSupplierData) {
+  return axios.post('/purchase/supplier', data);
 }
 
 export function updateSupplier(data: updateSupplierData) {
   return axios.put(`/purchase/supplier`, data);
 }
 
-export function getSupplier() {
-  return axios.get('/purchase/supplier');
+export function deleteSupplier(id: number) {
+  return axios.delete(`/purchase/supplier/${id}`);
 }

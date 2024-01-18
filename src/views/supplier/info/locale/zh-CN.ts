@@ -13,9 +13,9 @@ export default {
   'ph.supplierName': '请输入供应商名称',
   'ph.supplierAddress': '请输入供应商地址',
   // 校验规则
-  'rules.supplierName': '请输入供应商名称',
+  'rules.supplierName.require': '供应商名称不能为空',
   'rules.supplierName.max': '供应商名称最多输入10个字符',
-  'rules.supplierAddress': '请输入供应商地址',
+  'rules.supplierAddress.require': '供应商地址不能为空',
   'rules.supplierAddress.max': '供应商地址最多输入50个字符',
   'rules.supplierStatus': '请选择供应商状态',
 };

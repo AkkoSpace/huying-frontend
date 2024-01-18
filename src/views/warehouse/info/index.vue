@@ -62,7 +62,7 @@
       v-model:visible="isSave"
       :footer="false"
       :title="isAdd ? $t('title.warehouse.add') : $t('title.warehouse.edit')"
-      :width="350"
+      :width="450"
     >
       <a-form ref="formRef" :model="form" auto-label-width>
         <a-form-item
@@ -70,7 +70,7 @@
           :rules="[
             {
               required: true,
-              message: $t('rules.warehouseName'),
+              message: $t('rules.warehouseName.require'),
             },
             { max: 10, message: $t('rules.warehouseName.max') },
           ]"
@@ -87,7 +87,7 @@
           :rules="[
             {
               required: true,
-              message: $t('rules.warehouseAddress'),
+              message: $t('rules.warehouseAddress.require'),
             },
             { max: 50, message: $t('rules.warehouseAddress.max') },
           ]"
@@ -104,7 +104,7 @@
           :rules="[
             {
               required: true,
-              message: $t('rules.warehouseStatus'),
+              message: $t('rules.warehouseStatus.require'),
             },
           ]"
           :validate-trigger="['change', 'blur']"

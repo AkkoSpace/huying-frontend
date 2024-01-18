@@ -81,13 +81,13 @@
     </a-form>
     <a-space flex justify-end>
       <a-button @click="cancelSave">
-        {{ $t('text.cancel') }}
+        {{ $t('common.text.cancel') }}
       </a-button>
       <a-button v-if="isAdd" type="primary" @click="confirmAdd">
-        {{ $t('text.confirm') }}
+        {{ $t('common.text.confirm') }}
       </a-button>
       <a-button v-else type="primary" @click="confirmEdit">
-        {{ $t('text.confirm') }}
+        {{ $t('common.text.confirm') }}
       </a-button>
     </a-space>
   </a-modal>

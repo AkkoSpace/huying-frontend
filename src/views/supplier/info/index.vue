@@ -10,9 +10,9 @@
         <a-col :span="6">
           <a-card flex h-xs items-center justify-center w-full @click="onAdd">
             <a-row>
-              <a-typography-text>
+              <a-typography-title :heading="5">
                 {{ $t('text.supplier.add') }}
-              </a-typography-text>
+              </a-typography-title>
             </a-row>
             <a-row justify-center mt>
               <icon-plus />
@@ -22,7 +22,7 @@
         <a-col v-for="item in data" :key="item.id" :span="6">
           <a-card flex h-xs items-center justify-center w-full>
             <a-row justify-center>
-              <a-typography-title :heading="6">
+              <a-typography-title :heading="5">
                 {{ item.supplierName }}
               </a-typography-title>
             </a-row>
@@ -33,7 +33,7 @@
             </a-row>
             <a-row justify-center mt>
               <span mr>
-                <icon-edit @click="onEdit(item.id, item.supplierName)" />
+                <icon-edit @click="onEdit(item)" />
               </span>
               <a-popconfirm
                 :content="$t('common.content.delete')"
@@ -44,9 +44,6 @@
                 <span> <icon-delete /> </span>
               </a-popconfirm>
             </a-row>
-            <a-row justify-center mt w-full>
-              <a-switch />
-            </a-row>
           </a-card>
         </a-col>
       </a-row>
@@ -55,7 +52,7 @@
       v-model:visible="isSave"
       :footer="false"
       :title="isAdd ? $t('title.supplier.add') : $t('title.supplier.edit')"
-      :width="350"
+      :width="450"
     >
       <a-form ref="formRef" :model="form" auto-label-width>
         <a-form-item
@@ -63,7 +60,7 @@
           :rules="[
             {
               required: true,
-              message: $t('rules.supplierName'),
+              message: $t('rules.supplierName.require'),
             },
             { max: 10, message: $t('rules.supplierName.max') },
           ]"
@@ -80,7 +77,7 @@
           :rules="[
             {
               required: true,
-              message: $t('rules.supplierAddress'),
+              message: $t('rules.supplierAddress.require'),
             },
             { max: 50, message: $t('rules.supplierAddress.max') },
           ]"
@@ -95,13 +92,18 @@
       </a-form>
       <a-space flex justify-end>
         <a-button @click="cancelSave">
-          {{ $t('text.cancel') }}
+          {{ $t('common.text.cancel') }}
         </a-button>
-        <a-button v-if="isAdd" type="primary" @click="confirmAdd">
-          {{ $t('text.confirm') }}
+        <a-button
+          v-if="isAdd"
+          :loading="loading"
+          type="primary"
+          @click="confirmAdd"
+        >
+          {{ $t('common.text.confirm') }}
         </a-button>
-        <a-button v-else type="primary" @click="confirmEdit">
-          {{ $t('text.confirm') }}
+        <a-button v-else type="primary" :loading="loading" @click="confirmEdit">
+          {{ $t('common.text.confirm') }}
         </a-button>
       </a-space>
     </a-modal>
@@ -118,8 +120,10 @@
     getSupplier,
     updateSupplier,
   } from '@/api/supplier';
+  import useLoading from '@/hooks/loading';
 
   const { t } = useI18n();
+  const { loading, setLoading } = useLoading(false);
 
   const data = ref();
   const isSave = ref(false);
@@ -131,15 +135,19 @@
     supplierAddress: '',
   });
 
-  function getData() {
-    getSupplier().then((res: any) => {
-      data.value = res.data;
-    });
-  }
-
   const onAdd = () => {
     isSave.value = true;
     isAdd.value = true;
+  };
+
+  const onEdit = (item: any) => {
+    operationId.value = item.id;
+    form.value = {
+      supplierName: item.supplierName,
+      supplierAddress: item.supplierAddress,
+    };
+    isSave.value = true;
+    isAdd.value = false;
   };
 
   const cancelSave = () => {
@@ -148,33 +156,26 @@
     formRef.value.resetFields();
   };
 
-  const confirmDelete = (id: number) => {
-    deleteSupplier(id).then((res: any) => {
-      if (res.code === 20000) {
-        Message.success(t('message.delete.success'));
-        getData();
-      }
+  function getData() {
+    getSupplier().then((res: any) => {
+      data.value = res.data;
     });
-  };
-
-  const onEdit = (id: any, brandName: string) => {
-    operationId.value = id;
-    // form.value.brandName = brandName;
-    isSave.value = true;
-    isAdd.value = false;
-  };
+  }
 
   const confirmAdd = () => {
     formRef.value.validate(async (vaild: any) => {
       if (!vaild) {
-        await addSupplier(form.value).then((res: any) => {
-          if (res.code === 20000) {
-            getData();
-            isSave.value = false;
-            isAdd.value = false;
-            formRef.value.resetFields();
-          }
-        });
+        setLoading(true);
+        await addSupplier(form.value)
+          .then((res: any) => {
+            if (res.code === 20000) {
+              getData();
+              isSave.value = false;
+              isAdd.value = false;
+              formRef.value.resetFields();
+            }
+          })
+          .finally(() => setLoading(false));
       }
     });
   };
@@ -182,19 +183,35 @@
   const confirmEdit = () => {
     formRef.value.validate(async (vaild: any) => {
       if (!vaild) {
+        setLoading(true);
         await updateSupplier({
           id: operationId.value,
           ...form.value,
-        }).then((res: any) => {
-          if (res.code === 20000) {
-            getData();
-            isSave.value = false;
-            isAdd.value = false;
-            formRef.value.resetFields();
-          }
-        });
+        })
+          .then((res: any) => {
+            if (res.code === 20000) {
+              getData();
+              isSave.value = false;
+              isAdd.value = false;
+              formRef.value.resetFields();
+              Message.success(t('common.message.edit.success'));
+            }
+          })
+          .finally(() => setLoading(false));
       }
     });
+  };
+
+  const confirmDelete = (id: number) => {
+    setLoading(true);
+    deleteSupplier(id)
+      .then((res: any) => {
+        if (res.code === 20000) {
+          Message.success(t('common.message.delete.success'));
+          getData();
+        }
+      })
+      .finally(() => setLoading(false));
   };
 
   onMounted(() => {
