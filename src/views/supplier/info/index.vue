@@ -1,11 +1,11 @@
 <template>
   <div h-full pt-4 px-4>
     <a-card h-full>
-      <n-h3 prefix="bar" type="info">
+      <n-h2 prefix="bar" type="info">
         <a-typography-text>
           {{ $t('text.supplier.info') }}
         </a-typography-text>
-      </n-h3>
+      </n-h2>
       <a-row :gutter="[24, 12]">
         <a-col :span="6">
           <a-card flex h-xs items-center justify-center w-full @click="onAdd">
@@ -36,7 +36,7 @@
                 <icon-edit @click="onEdit(item.id, item.supplierName)" />
               </span>
               <a-popconfirm
-                :content="$t('content.delete')"
+                :content="$t('common.content.delete')"
                 position="bottom"
                 type="warning"
                 @ok="confirmDelete(item.id)"

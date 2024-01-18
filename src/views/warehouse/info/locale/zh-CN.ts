@@ -1,18 +1,9 @@
 export default {
-  // 通用
-  'text.confirm': '确定',
-  'text.cancel': '取消',
-  'content.delete': '确定要删除吗？',
-  'message.delete.success': '删除成功',
-  // 按钮
-  'btn.view': '查看',
-  'btn.edit': '编辑',
-  'btn.delete': '删除',
   // 文本
   'text.warehouse.info': '仓库信息',
-  'text.warehouse.add': '添加仓库',
+  'text.warehouse.add': '新增仓库',
   // 标题文本
-  'title.warehouse.add': '添加仓库',
+  'title.warehouse.add': '新增仓库',
   'title.warehouse.edit': '编辑仓库',
   // 标签文本
   'label.warehouseName': '仓库名称',

@@ -1,19 +1,19 @@
 export default {
   // 按钮
-  'btn.info.add': '添加产品',
-  'btn.category.add': '添加分类',
+  'btn.info.add': '新增产品',
+  'btn.category.add': '新增分类',
   // 文本
   'text.productInfo': '产品信息',
   'text.info.search': '请输入产品名称',
   'text.category.search': '请输入分类名称',
-  'text.brand.add': '点击添加品牌',
+  'text.brand.add': '点击新增品牌',
   'text.info.productUnit.1': '箱',
   'text.info.productUnit.2': '提',
   'text.info.productUnit.3': '件',
   // 标题文本
   'title.operation': '操作',
   'title.info': '产品信息',
-  'title.info.add': '添加产品',
+  'title.info.add': '新增产品',
   'title.info.edit': '编辑产品',
   'title.info.brandId': '品牌',
   'title.info.categoryId': '分类',
@@ -24,12 +24,12 @@ export default {
   'title.info.purchasePrice': '进价',
   'title.info.standardPrice': '标准售价',
   'title.category': '产品分类',
-  'title.category.add': '添加产品分类',
+  'title.category.add': '新增产品分类',
   'title.category.edit': '编辑产品分类',
   'title.category.productAttribute': '产品属性',
   'title.category.productType': '产品类型',
   'title.brand': '产品品牌',
-  'title.brand.add': '添加产品品牌',
+  'title.brand.add': '新增产品品牌',
   'title.brand.edit': '编辑产品品牌',
   'title.brand.brandName': '品牌名称',
   // 占位文本

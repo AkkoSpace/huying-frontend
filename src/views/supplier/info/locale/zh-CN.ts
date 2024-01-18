@@ -1,18 +1,9 @@
 export default {
-  // 通用
-  'text.confirm': '确定',
-  'text.cancel': '取消',
-  'content.delete': '确定要删除吗？',
-  'message.delete.success': '删除成功',
-  // 按钮
-  'btn.view': '查看',
-  'btn.edit': '编辑',
-  'btn.delete': '删除',
   // 文本
   'text.supplier.info': '供应商信息',
-  'text.supplier.add': '添加供应商',
+  'text.supplier.add': '新增供应商',
   // 标题文本
-  'title.supplier.add': '添加供应商',
+  'title.supplier.add': '新增供应商',
   'title.supplier.edit': '编辑供应商',
   // 标签文本
   'label.supplierName': '供应商名称',

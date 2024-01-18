@@ -1,11 +1,11 @@
 <template>
   <div h-full pt-4 px-4>
     <a-card h-full>
-      <n-h3 prefix="bar" type="info">
+      <n-h2 prefix="bar" type="info">
         <a-typography-text>
           {{ $t('text.productInfo') }}
         </a-typography-text>
-      </n-h3>
+      </n-h2>
       <a-tabs type="rounded">
         <a-tab-pane key="1" :title="$t('title.info')">
           <Info />
