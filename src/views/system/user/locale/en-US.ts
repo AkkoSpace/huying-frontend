@@ -1,3 +1,1 @@
-export default {
-  'menu.dashboard.workplace': 'Workplace',
-};
+export default {};

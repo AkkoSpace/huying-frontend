@@ -1,7 +1,14 @@
 export default {
   // Text
+  'common.text.watermark':
+    'Internal data, strictly prohibited from being leaked',
   'common.text.confirm': 'Confirm',
   'common.text.cancel': 'Cancel',
+  // Title
+  'common.title.delete': 'Delete',
+  'common.title.userId': 'User ID',
+  'common.title.createTime': 'Create Time',
+  'common.title.updateTime': 'Update Time',
   // Content
   'common.content.delete': 'Are you sure to delete?',
   // Message

@@ -7,8 +7,8 @@ export interface addProductInfoData {
   barCode: string;
   productSpec: string;
   productUnit: string;
-  purchasePrice: string;
-  standardPrice: string;
+  purchasePrice: number;
+  standardPrice: number;
 }
 
 export interface updateProductInfoData {
@@ -19,8 +19,8 @@ export interface updateProductInfoData {
   barCode: string;
   productSpec: string;
   productUnit: string;
-  purchasePrice: string;
-  standardPrice: string;
+  purchasePrice: number;
+  standardPrice: number;
 }
 export interface addProductBrandData {
   brandName: string;

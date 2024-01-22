@@ -3,9 +3,9 @@
     <a-col :span="6">
       <a-card flex h-xs items-center justify-center w-full @click="onAdd">
         <a-row>
-          <a-typography-text>
+          <a-typography-title :heading="6">
             {{ $t('text.brand.add') }}
-          </a-typography-text>
+          </a-typography-title>
         </a-row>
         <a-row justify-center mt>
           <icon-plus />
@@ -25,6 +25,7 @@
           </span>
           <a-popconfirm
             :content="$t('common.content.delete')"
+            :ok-loading="loading"
             position="bottom"
             type="warning"
             @ok="confirmDelete(item.id)"
@@ -64,10 +65,15 @@
       <a-button @click="cancelSave">
         {{ $t('common.text.cancel') }}
       </a-button>
-      <a-button v-if="isAdd" type="primary" @click="confirmAdd">
+      <a-button
+        v-if="isAdd"
+        :loading="loading"
+        type="primary"
+        @click="confirmAdd"
+      >
         {{ $t('common.text.confirm') }}
       </a-button>
-      <a-button v-else type="primary" @click="confirmEdit">
+      <a-button v-else :loading="loading" type="primary" @click="confirmEdit">
         {{ $t('common.text.confirm') }}
       </a-button>
     </a-space>
@@ -84,6 +90,7 @@
   } from '@/api/product';
   import { Message } from '@arco-design/web-vue';
   import { useI18n } from 'vue-i18n';
+  import useLoading from '@/hooks/loading';
 
   const { t } = useI18n();
 
@@ -96,30 +103,11 @@
     brandName: '',
   });
 
-  function getData() {
-    getProductBrand().then((res) => {
-      data.value = res.data;
-    });
-  }
+  const { loading, setLoading } = useLoading(false);
 
   const onAdd = () => {
     isSave.value = true;
     isAdd.value = true;
-  };
-
-  const cancelSave = () => {
-    isSave.value = false;
-    isAdd.value = false;
-    formRef.value.resetFields();
-  };
-
-  const confirmDelete = (id: number) => {
-    deleteProductBrand(id).then((res: any) => {
-      if (res.code === 20000) {
-        Message.success(t('message.delete.success'));
-        getData();
-      }
-    });
   };
 
   const onEdit = (id: any, brandName: string) => {
@@ -129,17 +117,34 @@
     isAdd.value = false;
   };
 
+  const cancelSave = () => {
+    isSave.value = false;
+    isAdd.value = false;
+    formRef.value.resetFields();
+  };
+
+  function getData() {
+    getProductBrand().then((res) => {
+      data.value = res.data;
+    });
+  }
+
   const confirmAdd = () => {
     formRef.value.validate(async (vaild: any) => {
       if (!vaild) {
-        await addProductBrand(form.value).then((res: any) => {
-          if (res.code === 20000) {
-            getData();
-            isSave.value = false;
-            isAdd.value = false;
-            formRef.value.resetFields();
-          }
-        });
+        setLoading(true);
+        await addProductBrand(form.value)
+          .then((res: any) => {
+            if (res.code === 20000) {
+              getData();
+              isSave.value = false;
+              isAdd.value = false;
+              formRef.value.resetFields();
+            }
+          })
+          .finally(() => {
+            setLoading(false);
+          });
       }
     });
   };
@@ -147,19 +152,38 @@
   const confirmEdit = () => {
     formRef.value.validate(async (vaild: any) => {
       if (!vaild) {
+        setLoading(true);
         await updateProductBrand({
           id: operationId.value,
           ...form.value,
-        }).then((res: any) => {
-          if (res.code === 20000) {
-            getData();
-            isSave.value = false;
-            isAdd.value = false;
-            formRef.value.resetFields();
-          }
-        });
+        })
+          .then((res: any) => {
+            if (res.code === 20000) {
+              getData();
+              isSave.value = false;
+              isAdd.value = false;
+              formRef.value.resetFields();
+            }
+          })
+          .finally(() => {
+            setLoading(false);
+          });
       }
     });
+  };
+
+  const confirmDelete = (id: number) => {
+    setLoading(true);
+    deleteProductBrand(id)
+      .then((res: any) => {
+        if (res.code === 20000) {
+          Message.success(t('common.message.delete.success'));
+          getData();
+        }
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   onMounted(() => {

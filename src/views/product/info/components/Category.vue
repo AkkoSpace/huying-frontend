@@ -1,6 +1,6 @@
 <template>
   <a-row flex justify-between>
-    <a-button type="primary" icon="plus" @click="onAdd">
+    <a-button icon="plus" type="primary" @click="onAdd">
       {{ $t('btn.category.add') }}
     </a-button>
     <a-input-search
@@ -12,25 +12,30 @@
   <a-row mt>
     <a-table :bordered="false" :columns="columns" :data="data" w-full>
       <template #operation="{ record }">
-        <a-button mr type="text" size="mini" @click="onView(record.id)">
-          <template #icon>
-            <icon-eye />
-          </template>
+        <a-dropdown-button @click="onView(record)">
           {{ $t('common.btn.view') }}
-        </a-button>
-        <a-popconfirm
-          :content="$t('common.content.delete')"
-          position="left"
-          type="warning"
-          @ok="confirmDelete(record.id)"
-        >
-          <a-button type="text" size="mini">
-            <template #icon>
-              <icon-delete />
-            </template>
-            {{ $t('common.btn.delete') }}
-          </a-button>
-        </a-popconfirm>
+          <template #icon>
+            <icon-down />
+          </template>
+          <template #content>
+            <a-doption @click="onEdit(record)">
+              <template #icon>
+                <icon-pen />
+              </template>
+              <template #default>
+                {{ $t('common.btn.edit') }}
+              </template>
+            </a-doption>
+            <a-doption @click="onDelete(record.id)">
+              <template #icon>
+                <icon-delete />
+              </template>
+              <template #default>
+                {{ $t('common.btn.delete') }}
+              </template>
+            </a-doption>
+          </template>
+        </a-dropdown-button>
       </template>
     </a-table>
   </a-row>
@@ -83,27 +88,43 @@
       <a-button @click="cancelSave">
         {{ $t('common.text.cancel') }}
       </a-button>
-      <a-button v-if="isAdd" type="primary" @click="confirmAdd">
+      <a-button
+        v-if="isAdd"
+        :loading="loading"
+        type="primary"
+        @click="confirmAdd"
+      >
         {{ $t('common.text.confirm') }}
       </a-button>
-      <a-button v-else type="primary" @click="confirmEdit">
+      <a-button v-else :loading="loading" type="primary" @click="confirmEdit">
         {{ $t('common.text.confirm') }}
       </a-button>
     </a-space>
   </a-modal>
+  <a-modal
+    v-model:visible="isView"
+    :footer="false"
+    :title="$t('title.category.view')"
+    :width="450"
+  >
+    <a-descriptions :column="1" :data="viewData" />
+  </a-modal>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
   import { onMounted, ref } from 'vue';
   import {
-    getProductCategory,
     addProductCategory,
     deleteProductCategory,
+    getProductCategory,
     updateProductCategory,
   } from '@/api/product';
   import { useI18n } from 'vue-i18n';
-  import { Message } from '@arco-design/web-vue';
+  import { Message, Modal } from '@arco-design/web-vue';
+  import useLoading from '@/hooks/loading';
+  import dayjs from 'dayjs';
 
+  const { loading, setLoading } = useLoading(false);
   const { t } = useI18n();
 
   const columns = [
@@ -123,9 +144,11 @@
     },
   ];
 
-  const data = ref();
   const isSave = ref(false);
   const isAdd = ref(false);
+  const isView = ref(false);
+  const data = ref();
+  const viewData = ref();
   const operationId = ref();
   const formRef = ref();
   const form = ref({
@@ -144,23 +167,86 @@
     isAdd.value = true;
   };
 
+  const onEdit = (record: any) => {
+    operationId.value = record.id;
+    isSave.value = true;
+    isAdd.value = false;
+    form.value = {
+      productAttribute: record.productAttribute,
+      productType: record.productType,
+    };
+  };
+
   const cancelSave = () => {
     isSave.value = false;
     isAdd.value = false;
     formRef.value.resetFields();
   };
 
+  const onView = (record: any) => {
+    isView.value = true;
+    viewData.value = [
+      {
+        label: t('title.category.productAttribute'),
+        value: record.productAttribute,
+      },
+      {
+        label: t('title.category.productType'),
+        value: record.productType,
+      },
+      {
+        label: t('common.title.userId'),
+        value: record.userId,
+      },
+      {
+        label: t('common.title.createTime'),
+        value: record.createTime,
+      },
+      {
+        label: t('common.title.updateTime'),
+        value: record.updateTime,
+      },
+    ];
+  };
+
+  const onDelete = (id: number) => {
+    Modal.error({
+      title: t('common.title.delete'),
+      content: t('common.content.delete'),
+      hideCancel: false,
+      okLoading: !loading,
+      async onOk() {
+        setLoading(true);
+        deleteProductCategory(id)
+          .then((res: any) => {
+            if (res.code === 20000) {
+              Message.success(t('common.message.delete.success'));
+              getData();
+            }
+          })
+          .finally(() => {
+            setLoading(false);
+          });
+      },
+    });
+  };
+
   const confirmAdd = () => {
     formRef.value.validate(async (vaild: any) => {
       if (!vaild) {
-        addProductCategory(form.value).then((res: any) => {
-          if (res.code === 20000) {
-            getData();
-            isSave.value = false;
-            isAdd.value = false;
-            formRef.value.resetFields();
-          }
-        });
+        setLoading(true);
+        addProductCategory(form.value)
+          .then((res: any) => {
+            if (res.code === 20000) {
+              getData();
+              isSave.value = false;
+              isAdd.value = false;
+              formRef.value.resetFields();
+            }
+          })
+          .finally(() => {
+            setLoading(false);
+          });
       }
     });
   };
@@ -168,30 +254,22 @@
   const confirmEdit = () => {
     formRef.value.validate(async (vaild: any) => {
       if (!vaild) {
+        setLoading(true);
         await updateProductCategory({
           id: operationId.value,
           ...form.value,
-        }).then((res: any) => {
-          if (res.code === 20000) {
-            getData();
-            isSave.value = false;
-            isAdd.value = false;
-            formRef.value.resetFields();
-          }
-        });
-      }
-    });
-  };
-
-  const onView = (id: number) => {
-    operationId.value = id;
-  };
-
-  const confirmDelete = (id: number) => {
-    deleteProductCategory(id).then((res: any) => {
-      if (res.code === 20000) {
-        Message.success(t('message.delete.success'));
-        getData();
+        })
+          .then((res: any) => {
+            if (res.code === 20000) {
+              getData();
+              isSave.value = false;
+              isAdd.value = false;
+              formRef.value.resetFields();
+            }
+          })
+          .finally(() => {
+            setLoading(false);
+          });
       }
     });
   };

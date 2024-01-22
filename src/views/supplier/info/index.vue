@@ -10,7 +10,7 @@
         <a-col :span="6">
           <a-card flex h-xs items-center justify-center w-full @click="onAdd">
             <a-row>
-              <a-typography-title :heading="5">
+              <a-typography-title :heading="6">
                 {{ $t('text.supplier.add') }}
               </a-typography-title>
             </a-row>
@@ -22,7 +22,7 @@
         <a-col v-for="item in data" :key="item.id" :span="6">
           <a-card flex h-xs items-center justify-center w-full>
             <a-row justify-center>
-              <a-typography-title :heading="5">
+              <a-typography-title :heading="6">
                 {{ item.supplierName }}
               </a-typography-title>
             </a-row>
@@ -37,6 +37,7 @@
               </span>
               <a-popconfirm
                 :content="$t('common.content.delete')"
+                :ok-loading="loading"
                 position="bottom"
                 type="warning"
                 @ok="confirmDelete(item.id)"
@@ -102,7 +103,7 @@
         >
           {{ $t('common.text.confirm') }}
         </a-button>
-        <a-button v-else type="primary" :loading="loading" @click="confirmEdit">
+        <a-button v-else :loading="loading" type="primary" @click="confirmEdit">
           {{ $t('common.text.confirm') }}
         </a-button>
       </a-space>

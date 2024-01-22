@@ -17,7 +17,7 @@ const SYSTEM: AppRouteRecordRaw = {
       name: 'Setting',
       component: () => import('@/views/system/setting/index.vue'),
       meta: {
-        locale: 'menu.system.setting',
+        locale: 'menu.system.center',
         requiresAuth: true,
         roles: ['*'],
       },

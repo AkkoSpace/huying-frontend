@@ -1,7 +1,7 @@
 import localeMessageBox from '@/components/message-box/locale/en-US';
 import localeLogin from '@/views/login/locale/en-US';
 import localeNavbar from '@/components/navbar/locale/en-US';
-import localeWorkplace from '@/views/dashboard/workplace/locale/en-US';
+import localeScreen from '@/views/dashboard/screen/locale/en-US';
 import localeProductInfo from '@/views/product/info/locale/en-US';
 import localeWarehouseInfo from '@/views/warehouse/info/locale/en-US';
 import localeSupplierInfo from '@/views/supplier/info/locale/en-US';
@@ -14,7 +14,7 @@ export default {
   ...localeNavbar,
   ...localeMessageBox,
   ...localeLogin,
-  ...localeWorkplace,
+  ...localeScreen,
   ...localeMenu,
   ...localeProductInfo,
   ...localeWarehouseInfo,

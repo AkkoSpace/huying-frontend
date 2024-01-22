@@ -1,5 +1,6 @@
 export default {
   'menu.dashboard': 'Dashboard',
+  'menu.dashboard.screen': 'Screen',
   'menu.product': 'Product',
   'menu.product.info': 'Info',
   'menu.product.price': 'Price',
@@ -11,6 +12,6 @@ export default {
   'menu.purchase': 'Purchase',
   'menu.purchase.order': 'Order',
   'menu.system': 'System',
-  'menu.system.setting': 'Setting',
+  'menu.system.center': 'Center',
   'menu.system.user': 'User',
 };

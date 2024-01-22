@@ -1,6 +1,6 @@
 <template>
   <a-row flex justify-between>
-    <a-button type="primary" icon="plus" @click="onAdd">
+    <a-button icon="plus" type="primary" @click="onAdd">
       {{ $t('btn.info.add') }}
     </a-button>
     <a-input-search
@@ -10,41 +10,52 @@
     />
   </a-row>
   <a-row mt>
-    <a-table :bordered="false" :columns="columns" :data="data" w-full>
-      <template #brandId="{ record }">
-        {{ brandList.find((item) => item.id === record.brandId)?.brandName }}
-      </template>
-      <template #categoryId="{ record }">
-        {{
-          categoryList.find((item) => item.id === record.categoryId)
-            ?.productAttribute +
-          '/' +
-          categoryList.find((item) => item.id === record.categoryId)
-            ?.productType
-        }}
-      </template>
-      <template #operation="{ record }">
-        <a-button mr type="text" size="mini" @click="onView(record.id)">
-          <template #icon>
-            <icon-eye />
-          </template>
-          {{ $t('common.btn.view') }}
-        </a-button>
-        <a-popconfirm
-          :content="$t('common.content.delete')"
-          position="left"
-          type="warning"
-          @ok="confirmDelete(record.id)"
-        >
-          <a-button type="text" size="mini">
+    <a-watermark
+      :content="[$t('common.text.watermark'), dayjs().format('YYYY-MM-DD')]"
+      v-bind="watermark"
+      w-full
+    >
+      <a-table :bordered="false" :columns="columns" :data="data" w-full>
+        <template #brandId="{ record }">
+          {{ brandList.find((item) => item.id === record.brandId)?.brandName }}
+        </template>
+        <template #categoryId="{ record }">
+          {{
+            categoryList.find((item) => item.id === record.categoryId)
+              ?.productAttribute +
+            '/' +
+            categoryList.find((item) => item.id === record.categoryId)
+              ?.productType
+          }}
+        </template>
+        <template #operation="{ record }">
+          <a-dropdown-button @click="onView(record)">
+            {{ $t('common.btn.view') }}
             <template #icon>
-              <icon-delete />
+              <icon-down />
             </template>
-            {{ $t('common.btn.delete') }}
-          </a-button>
-        </a-popconfirm>
-      </template>
-    </a-table>
+            <template #content>
+              <a-doption @click="onEdit(record)">
+                <template #icon>
+                  <icon-pen />
+                </template>
+                <template #default>
+                  {{ $t('common.btn.edit') }}
+                </template>
+              </a-doption>
+              <a-doption @click="onDelete(record.id)">
+                <template #icon>
+                  <icon-delete />
+                </template>
+                <template #default>
+                  {{ $t('common.btn.delete') }}
+                </template>
+              </a-doption>
+            </template>
+          </a-dropdown-button>
+        </template>
+      </a-table>
+    </a-watermark>
   </a-row>
   <a-modal
     v-model:visible="isSave"
@@ -107,7 +118,10 @@
       >
         <a-input
           v-model="form.productName"
+          :max-length="{ length: 20, errorOnly: true }"
           :placeholder="$t('ph.info.productName')"
+          allow-clear
+          show-word-limit
         />
       </a-form-item>
       <a-form-item
@@ -121,7 +135,13 @@
         :validate-trigger="['change', 'blur']"
         field="barCode"
       >
-        <a-input v-model="form.barCode" :placeholder="$t('ph.info.barCode')" />
+        <a-input
+          v-model="form.barCode"
+          :max-length="{ length: 20, errorOnly: true }"
+          :placeholder="$t('ph.info.barCode')"
+          allow-clear
+          show-word-limit
+        />
       </a-form-item>
       <a-form-item
         :label="$t('title.info.productSpec')"
@@ -136,7 +156,10 @@
       >
         <a-input
           v-model="form.productSpec"
+          :max-length="{ length: 20, errorOnly: true }"
           :placeholder="$t('ph.info.productSpec')"
+          allow-clear
+          show-word-limit
         />
       </a-form-item>
       <a-form-item
@@ -179,13 +202,13 @@
       >
         <a-input-number
           v-model="form.purchasePrice"
-          :placeholder="$t('ph.info.purchasePrice')"
-          :min="0"
           :allow-clear="true"
           :hide-button="true"
+          :min="0"
+          :placeholder="$t('ph.info.purchasePrice')"
           :precision="2"
         >
-          <template #prefix> RMB </template>
+          <template #prefix> RMB</template>
         </a-input-number>
       </a-form-item>
       <a-form-item
@@ -201,13 +224,13 @@
       >
         <a-input-number
           v-model="form.standardPrice"
-          :placeholder="$t('ph.info.standardPrice')"
-          :min="0"
           :allow-clear="true"
           :hide-button="true"
+          :min="0"
+          :placeholder="$t('ph.info.standardPrice')"
           :precision="2"
         >
-          <template #prefix> RMB </template>
+          <template #prefix> RMB</template>
         </a-input-number>
       </a-form-item>
     </a-form>
@@ -215,29 +238,45 @@
       <a-button @click="cancelSave">
         {{ $t('common.text.cancel') }}
       </a-button>
-      <a-button v-if="isAdd" type="primary" @click="confirmAdd">
+      <a-button
+        v-if="isAdd"
+        :loading="loading"
+        type="primary"
+        @click="confirmAdd"
+      >
         {{ $t('common.text.confirm') }}
       </a-button>
-      <a-button v-else type="primary" @click="confirmEdit">
+      <a-button v-else :loading="loading" type="primary" @click="confirmEdit">
         {{ $t('common.text.confirm') }}
       </a-button>
     </a-space>
   </a-modal>
+  <a-modal
+    v-model:visible="isView"
+    :footer="false"
+    :title="$t('title.info.view')"
+    :width="450"
+  >
+    <a-descriptions :column="1" :data="viewData" />
+  </a-modal>
 </template>
 
-<script setup lang="ts">
-  import { onMounted, ref } from 'vue';
+<script lang="ts" setup>
+  import { onMounted, reactive, ref } from 'vue';
   import {
-    getProductInfo,
     addProductInfo,
     deleteProductInfo,
-    updateProductInfo,
     getProductBrand,
     getProductCategory,
+    getProductInfo,
+    updateProductInfo,
   } from '@/api/product';
   import { useI18n } from 'vue-i18n';
-  import { Message } from '@arco-design/web-vue';
+  import { Message, Modal } from '@arco-design/web-vue';
+  import useLoading from '@/hooks/loading';
+  import dayjs from 'dayjs';
 
+  const { loading, setLoading } = useLoading(false);
   const { t } = useI18n();
 
   const columns = [
@@ -281,9 +320,25 @@
     },
   ];
 
-  const data = ref();
+  interface BrandList {
+    id: number;
+    brandName: string;
+  }
+
+  interface CategoryList {
+    id: number;
+    productAttribute: string;
+    productType: string;
+  }
+
+  const brandList = ref([] as BrandList[]);
+  const categoryList = ref([] as CategoryList[]);
+
   const isSave = ref(false);
   const isAdd = ref(false);
+  const isView = ref(false);
+  const data = ref();
+  const viewData = ref();
   const operationId = ref();
   const formRef = ref();
   const form = ref({
@@ -295,6 +350,9 @@
     productUnit: '',
     purchasePrice: 0,
     standardPrice: 0,
+  });
+  const watermark = reactive({
+    gap: [188, 188],
   });
 
   function getData() {
@@ -308,23 +366,124 @@
     isAdd.value = true;
   };
 
+  const onEdit = (record: any) => {
+    operationId.value = record.id;
+    isSave.value = true;
+    isAdd.value = false;
+    form.value = {
+      brandId: record.brandId,
+      categoryId: record.categoryId,
+      productName: record.productName,
+      barCode: record.barCode,
+      productSpec: record.productSpec,
+      productUnit: record.productUnit,
+      purchasePrice: record.purchasePrice,
+      standardPrice: record.standardPrice,
+    };
+  };
+
   const cancelSave = () => {
     isSave.value = false;
     isAdd.value = false;
     formRef.value.resetFields();
   };
 
+  const onView = (record: any) => {
+    isView.value = true;
+    viewData.value = [
+      {
+        label: t('title.info.brandId'),
+        value: brandList.value.find(
+          (item: { id: any }) => item.id === record.brandId
+        )?.brandName,
+      },
+      {
+        label: t('title.info.categoryId'),
+        value: `${
+          categoryList.value.find((item) => item.id === record.categoryId)
+            ?.productAttribute
+        }/${
+          categoryList.value.find((item) => item.id === record.categoryId)
+            ?.productType
+        }`,
+      },
+      {
+        label: t('title.info.productName'),
+        value: record.productName,
+      },
+      {
+        label: t('title.info.barCode'),
+        value: record.barCode,
+      },
+      {
+        label: t('title.info.productSpec'),
+        value: record.productSpec,
+      },
+      {
+        label: t('title.info.productUnit'),
+        value: record.productUnit,
+      },
+      {
+        label: t('title.info.purchasePrice'),
+        value: record.purchasePrice,
+      },
+      {
+        label: t('title.info.standardPrice'),
+        value: record.standardPrice,
+      },
+      {
+        label: t('common.title.userId'),
+        value: record.userId,
+      },
+      {
+        label: t('common.title.createTime'),
+        value: record.createTime,
+      },
+      {
+        label: t('common.title.updateTime'),
+        value: record.updateTime,
+      },
+    ];
+  };
+
+  const onDelete = (id: number) => {
+    Modal.error({
+      title: t('common.title.delete'),
+      content: t('common.content.delete'),
+      hideCancel: false,
+      okLoading: !loading,
+      async onOk() {
+        setLoading(true);
+        deleteProductInfo(id)
+          .then((res: any) => {
+            if (res.code === 20000) {
+              Message.success(t('common.message.delete.success'));
+              getData();
+            }
+          })
+          .finally(() => {
+            setLoading(false);
+          });
+      },
+    });
+  };
+
   const confirmAdd = () => {
     formRef.value.validate(async (vaild: any) => {
       if (!vaild) {
-        addProductInfo(form.value).then((res: any) => {
-          if (res.code === 20000) {
-            getData();
-            isSave.value = false;
-            isAdd.value = false;
-            formRef.value.resetFields();
-          }
-        });
+        setLoading(true);
+        addProductInfo(form.value)
+          .then((res: any) => {
+            if (res.code === 20000) {
+              getData();
+              isSave.value = false;
+              isAdd.value = false;
+              formRef.value.resetFields();
+            }
+          })
+          .finally(() => {
+            setLoading(false);
+          });
       }
     });
   };
@@ -332,36 +491,26 @@
   const confirmEdit = () => {
     formRef.value.validate(async (vaild: any) => {
       if (!vaild) {
-        // await updateProductInfo({
-        //   id: operationId.value,
-        //   ...form.value,
-        // }).then((res: any) => {
-        //   if (res.code === 20000) {
-        //     getData();
-        //     isSave.value = false;
-        //     isAdd.value = false;
-        //     formRef.value.resetFields();
-        //   }
-        // });
+        setLoading(true);
+        updateProductInfo({
+          id: operationId.value,
+          ...form.value,
+        })
+          .then((res: any) => {
+            if (res.code === 20000) {
+              getData();
+              isSave.value = false;
+              isAdd.value = false;
+              formRef.value.resetFields();
+            }
+          })
+          .finally(() => {
+            setLoading(false);
+          });
       }
     });
   };
 
-  const onView = (id: number) => {
-    operationId.value = id;
-  };
-
-  const confirmDelete = (id: number) => {
-    deleteProductInfo(id).then((res: any) => {
-      if (res.code === 20000) {
-        Message.success(t('message.delete.success'));
-        getData();
-      }
-    });
-  };
-
-  const brandList = ref([]);
-  const categoryList = ref([]);
   function getListData() {
     getProductBrand().then((res) => {
       brandList.value = res.data;

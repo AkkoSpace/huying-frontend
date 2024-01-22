@@ -10,7 +10,7 @@
         <a-col :span="6">
           <a-card flex h-xs items-center justify-center w-full @click="onAdd">
             <a-row>
-              <a-typography-title :heading="5">
+              <a-typography-title :heading="6">
                 {{ $t('text.warehouse.add') }}
               </a-typography-title>
             </a-row>
@@ -22,14 +22,14 @@
         <a-col v-for="item in data" :key="item.id" :span="6">
           <a-card flex h-xs items-center justify-center w-full>
             <a-row justify-center>
-              <a-typography-title :heading="5">
+              <a-typography-title :heading="6">
                 {{ item.warehouseName }}
               </a-typography-title>
             </a-row>
             <a-row justify-center>
-              <a-typography-title :heading="6">
+              <a-typography-text type="secondary">
                 {{ item.warehouseAddress }}
-              </a-typography-title>
+              </a-typography-text>
             </a-row>
             <a-row justify-center mt>
               <span mr>
@@ -192,9 +192,9 @@
   }
 
   const confirmAdd = () => {
-    setLoading(true);
     formRef.value.validate(async (vaild: any) => {
       if (!vaild) {
+        setLoading(true);
         await addWarehouse(form.value)
           .then((res: any) => {
             if (res.code === 20000) {
@@ -206,16 +206,14 @@
             }
           })
           .finally(() => setLoading(false));
-      } else {
-        setLoading(false);
       }
     });
   };
 
   const confirmEdit = () => {
-    setLoading(true);
     formRef.value.validate(async (vaild: any) => {
       if (!vaild) {
+        setLoading(true);
         await updateWarehouse({
           id: operationId.value,
           ...form.value,
@@ -230,8 +228,6 @@
             }
           })
           .finally(() => setLoading(false));
-      } else {
-        setLoading(false);
       }
     });
   };
@@ -241,7 +237,7 @@
     deleteWarehouse(id)
       .then((res: any) => {
         if (res.code === 20000) {
-          Message.success(t('message.delete.success'));
+          Message.success(t('common.message.delete.success'));
           getData();
         }
       })

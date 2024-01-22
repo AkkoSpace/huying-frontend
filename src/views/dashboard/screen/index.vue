@@ -1,5 +1,5 @@
 <template>
-  <div> workplace </div>
+  <div> Screen </div>
 </template>
 
 <script lang="ts" setup></script>
