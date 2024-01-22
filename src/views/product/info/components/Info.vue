@@ -4,9 +4,14 @@
       {{ $t('btn.info.add') }}
     </a-button>
     <a-input-search
+      v-model="searchValue"
+      :allow-clear="true"
       :enter-button="true"
+      :loading="loading"
       :placeholder="$t('text.info.search')"
+      search-button
       style="width: 200px; margin-right: 10px"
+      @search="onSearch"
     />
   </a-row>
   <a-row mt>
@@ -269,6 +274,7 @@
     getProductBrand,
     getProductCategory,
     getProductInfo,
+    searchProductInfo,
     updateProductInfo,
   } from '@/api/product';
   import { useI18n } from 'vue-i18n';
@@ -278,7 +284,6 @@
 
   const { loading, setLoading } = useLoading(false);
   const { t } = useI18n();
-
   const columns = [
     {
       title: t('title.info.brandId'),
@@ -333,7 +338,6 @@
 
   const brandList = ref([] as BrandList[]);
   const categoryList = ref([] as CategoryList[]);
-
   const isSave = ref(false);
   const isAdd = ref(false);
   const isView = ref(false);
@@ -341,6 +345,7 @@
   const viewData = ref();
   const operationId = ref();
   const formRef = ref();
+  const searchValue = ref('');
   const form = ref({
     brandId: '',
     categoryId: '',
@@ -386,6 +391,12 @@
     isSave.value = false;
     isAdd.value = false;
     formRef.value.resetFields();
+  };
+
+  const onSearch = () => {
+    searchProductInfo(searchValue.value).then((res) => {
+      data.value = res.data;
+    });
   };
 
   const onView = (record: any) => {

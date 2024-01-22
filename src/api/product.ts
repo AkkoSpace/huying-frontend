@@ -22,6 +22,7 @@ export interface updateProductInfoData {
   purchasePrice: number;
   standardPrice: number;
 }
+
 export interface addProductBrandData {
   brandName: string;
 }
@@ -42,50 +43,54 @@ export interface updateProductCategoryData {
   productType: string;
 }
 
-export function addProductInfo(data: addProductInfoData) {
-  return axios.post('/basic/product', data);
+export function getProductInfo() {
+  return axios.get('/basic/product');
 }
 
-export function deleteProductInfo(id: number) {
-  return axios.delete(`/basic/product/${id}`);
+export function searchProductInfo(productName: string) {
+  return axios.get(`/basic/product/search?productName=${productName}`);
+}
+
+export function addProductInfo(data: addProductInfoData) {
+  return axios.post('/basic/product', data);
 }
 
 export function updateProductInfo(data: updateProductInfoData) {
   return axios.put(`/basic/product`, data);
 }
 
-export function getProductInfo() {
-  return axios.get('/basic/product');
-}
-
-export function addProductBrand(data: addProductBrandData) {
-  return axios.post('/basic/productBrand', data);
-}
-
-export function deleteProductBrand(id: number) {
-  return axios.delete(`/basic/productBrand/${id}`);
-}
-
-export function updateProductBrand(data: updateProductBrandData) {
-  return axios.put(`/basic/productBrand`, data);
+export function deleteProductInfo(id: number) {
+  return axios.delete(`/basic/product/${id}`);
 }
 
 export function getProductBrand() {
   return axios.get('/basic/productBrand');
 }
 
-export function addProductCategory(data: addProductCategoryData) {
-  return axios.post('/basic/productCategory', data);
+export function addProductBrand(data: addProductBrandData) {
+  return axios.post('/basic/productBrand', data);
 }
 
-export function deleteProductCategory(id: number) {
-  return axios.delete(`/basic/productCategory/${id}`);
+export function updateProductBrand(data: updateProductBrandData) {
+  return axios.put(`/basic/productBrand`, data);
+}
+
+export function deleteProductBrand(id: number) {
+  return axios.delete(`/basic/productBrand/${id}`);
+}
+
+export function getProductCategory() {
+  return axios.get('/basic/productCategory');
+}
+
+export function addProductCategory(data: addProductCategoryData) {
+  return axios.post('/basic/productCategory', data);
 }
 
 export function updateProductCategory(data: updateProductCategoryData) {
   return axios.put(`/basic/productCategory`, data);
 }
 
-export function getProductCategory() {
-  return axios.get('/basic/productCategory');
+export function deleteProductCategory(id: number) {
+  return axios.delete(`/basic/productCategory/${id}`);
 }
