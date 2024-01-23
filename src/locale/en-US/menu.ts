@@ -1,0 +1,17 @@
+export default {
+  'menu.dashboard': 'Dashboard',
+  'menu.dashboard.screen': 'Screen',
+  'menu.product': 'Product',
+  'menu.product.info': 'Info',
+  'menu.product.price': 'Price',
+  'menu.warehouse': 'Warehouse',
+  'menu.warehouse.info': 'Info',
+  'menu.supplier': 'Supplier',
+  'menu.supplier.info': 'Info',
+  'menu.supplier.price': 'Price',
+  'menu.purchase': 'Purchase',
+  'menu.purchase.order': 'Order',
+  'menu.system': 'System',
+  'menu.system.center': 'Center',
+  'menu.system.user': 'User',
+};
