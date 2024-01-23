@@ -67,6 +67,10 @@ export function getProductBrand() {
   return axios.get('/basic/productBrand');
 }
 
+export function searchProductBrand(brandName: string) {
+  return axios.get(`/basic/productBrand/search?brandName=${brandName}`);
+}
+
 export function addProductBrand(data: addProductBrandData) {
   return axios.post('/basic/productBrand', data);
 }
@@ -81,6 +85,10 @@ export function deleteProductBrand(id: number) {
 
 export function getProductCategory() {
   return axios.get('/basic/productCategory');
+}
+
+export function searchProductCategory(value: string) {
+  return axios.get(`/basic/productCategory/search?value=${value}`);
 }
 
 export function addProductCategory(data: addProductCategoryData) {

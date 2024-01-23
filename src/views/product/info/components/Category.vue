@@ -4,9 +4,15 @@
       {{ $t('btn.category.add') }}
     </a-button>
     <a-input-search
-      :enter-button="true"
+      v-model="searchValue"
+      :allow-clear="true"
+      :loading="loading"
       :placeholder="$t('text.category.search')"
+      search-button
       style="width: 200px; margin-right: 10px"
+      @change="onSearch"
+      @clear="onSearch"
+      @search="onSearch"
     />
   </a-row>
   <a-row mt>
@@ -117,12 +123,12 @@
     addProductCategory,
     deleteProductCategory,
     getProductCategory,
+    searchProductCategory,
     updateProductCategory,
   } from '@/api/product';
   import { useI18n } from 'vue-i18n';
   import { Message, Modal } from '@arco-design/web-vue';
   import useLoading from '@/hooks/loading';
-  import dayjs from 'dayjs';
 
   const { loading, setLoading } = useLoading(false);
   const { t } = useI18n();
@@ -151,6 +157,7 @@
   const viewData = ref();
   const operationId = ref();
   const formRef = ref();
+  const searchValue = ref('');
   const form = ref({
     productAttribute: '',
     productType: '',
@@ -181,6 +188,12 @@
     isSave.value = false;
     isAdd.value = false;
     formRef.value.resetFields();
+  };
+
+  const onSearch = () => {
+    searchProductCategory(searchValue.value).then((res) => {
+      data.value = res.data;
+    });
   };
 
   const onView = (record: any) => {

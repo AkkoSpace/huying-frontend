@@ -6,11 +6,12 @@
     <a-input-search
       v-model="searchValue"
       :allow-clear="true"
-      :enter-button="true"
       :loading="loading"
       :placeholder="$t('text.info.search')"
       search-button
       style="width: 200px; margin-right: 10px"
+      @change="onSearch"
+      @clear="onSearch"
       @search="onSearch"
     />
   </a-row>
