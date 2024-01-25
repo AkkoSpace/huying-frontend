@@ -3,6 +3,7 @@ import localeLogin from '@/views/login/locale/en-US';
 import localeNavbar from '@/components/navbar/locale/en-US';
 import localeScreen from '@/views/dashboard/screen/locale/en-US';
 import localeProductInfo from '@/views/product/info/locale/en-US';
+import localeProductPrice from '@/views/product/price/locale/zh-CN';
 import localeWarehouseInfo from '@/views/warehouse/info/locale/en-US';
 import localeSupplierInfo from '@/views/supplier/info/locale/en-US';
 import localeSettings from './en-US/settings';
@@ -17,6 +18,7 @@ export default {
   ...localeScreen,
   ...localeMenu,
   ...localeProductInfo,
+  ...localeProductPrice,
   ...localeWarehouseInfo,
   ...localeSupplierInfo,
   ...localeCommon,

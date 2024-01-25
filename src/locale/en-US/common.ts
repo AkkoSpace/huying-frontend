@@ -1,7 +1,6 @@
 export default {
   // Text
-  'common.text.watermark':
-    'Internal data, strictly prohibited from being leaked',
+  'common.text.watermark': 'Internal data, leak is prohibited!',
   'common.text.confirm': 'Confirm',
   'common.text.cancel': 'Cancel',
   // Title

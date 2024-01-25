@@ -145,7 +145,7 @@
     {
       title: t('title.operation'),
       slotName: 'operation',
-      width: 200,
+      width: 100,
       align: 'center',
     },
   ];

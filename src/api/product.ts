@@ -102,3 +102,7 @@ export function updateProductCategory(data: updateProductCategoryData) {
 export function deleteProductCategory(id: number) {
   return axios.delete(`/basic/productCategory/${id}`);
 }
+
+export function getSellingPrice() {
+  return axios.get('/basic/sellingPrice');
+}

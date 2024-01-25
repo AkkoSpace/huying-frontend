@@ -214,7 +214,7 @@
           :placeholder="$t('ph.info.purchasePrice')"
           :precision="2"
         >
-          <template #prefix> RMB</template>
+          <template #prefix> ￥</template>
         </a-input-number>
       </a-form-item>
       <a-form-item
@@ -236,7 +236,7 @@
           :placeholder="$t('ph.info.standardPrice')"
           :precision="2"
         >
-          <template #prefix> RMB</template>
+          <template #prefix> ￥</template>
         </a-input-number>
       </a-form-item>
     </a-form>
@@ -321,7 +321,7 @@
     {
       title: t('title.operation'),
       slotName: 'operation',
-      width: 200,
+      width: 100,
       align: 'center',
     },
   ];
@@ -437,11 +437,11 @@
       },
       {
         label: t('title.info.purchasePrice'),
-        value: record.purchasePrice,
+        value: `￥ ${record.purchasePrice}`,
       },
       {
         label: t('title.info.standardPrice'),
-        value: record.standardPrice,
+        value: `￥ ${record.standardPrice}`,
       },
       {
         label: t('common.title.userId'),
