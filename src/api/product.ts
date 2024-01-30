@@ -43,6 +43,25 @@ export interface updateProductCategoryData {
   productType: string;
 }
 
+export interface addProductSellingPriceData {
+  productId: string;
+  purchasePrice: number;
+  standardPrice: number;
+  sellingPrice: number;
+  productProfit: number;
+  priceLevel: number;
+}
+
+export interface updateProductSellingPriceData {
+  id: number;
+  productId: string;
+  purchasePrice: number;
+  standardPrice: number;
+  sellingPrice: number;
+  productProfit: number;
+  priceLevel: number;
+}
+
 export function getProductInfo() {
   return axios.get('/basic/product');
 }
@@ -103,6 +122,18 @@ export function deleteProductCategory(id: number) {
   return axios.delete(`/basic/productCategory/${id}`);
 }
 
-export function getSellingPrice() {
-  return axios.get('/basic/sellingPrice');
+export function getProductSellingPrice() {
+  return axios.get('/basic/product/sellingPrice');
+}
+
+export function addProductSellingPrice(data: addProductSellingPriceData) {
+  return axios.post('/basic/product/sellingPrice', data);
+}
+
+export function updateProductSellingPrice(data: updateProductSellingPriceData) {
+  return axios.put(`/basic/product/sellingPrice`, data);
+}
+
+export function deleteProductSellingPrice(id: number) {
+  return axios.delete(`/basic/product/sellingPrice/${id}`);
 }

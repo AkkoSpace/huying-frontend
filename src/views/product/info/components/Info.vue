@@ -34,6 +34,9 @@
               ?.productType
           }}
         </template>
+        <template #barCode="{ record }">
+          {{ record.barCode || '—' }}
+        </template>
         <template #operation="{ record }">
           <a-dropdown-button @click="onView(record)">
             {{ $t('common.btn.view') }}
@@ -300,7 +303,7 @@
     },
     {
       title: t('title.info.barCode'),
-      dataIndex: 'barCode',
+      slotName: 'barCode',
     },
     {
       title: t('title.info.productSpec'),

@@ -162,6 +162,7 @@
                   :min="0"
                   :placeholder="$t('ph.sellingPrice.purchasePrice')"
                   :precision="2"
+                  disabled
                 >
                   <template #prefix> ￥</template>
                 </a-input-number>
@@ -182,6 +183,7 @@
                   :allow-clear="true"
                   :hide-button="true"
                   :min="0"
+                  disabled
                   :placeholder="$t('ph.sellingPrice.standardPrice')"
                   :precision="2"
                 >
@@ -206,6 +208,7 @@
                   :min="0"
                   :placeholder="$t('ph.sellingPrice.sellingPrice')"
                   :precision="2"
+                  @change="calcProfit"
                 >
                   <template #prefix> ￥</template>
                 </a-input-number>
@@ -226,6 +229,7 @@
                   :allow-clear="true"
                   :hide-button="true"
                   :min="0"
+                  disabled
                   :placeholder="$t('ph.sellingPrice.productProfit')"
                   :precision="2"
                 >
@@ -288,14 +292,14 @@
 <script lang="ts" setup>
   import { onMounted, reactive, ref } from 'vue';
   import {
-    addProductInfo,
-    deleteProductInfo,
+    addProductSellingPrice,
+    deleteProductSellingPrice,
     getProductBrand,
     getProductCategory,
     getProductInfo,
-    getSellingPrice,
+    getProductSellingPrice,
     searchProductInfo,
-    updateProductInfo,
+    updateProductSellingPrice,
   } from '@/api/product';
   import { useI18n } from 'vue-i18n';
   import { Message, Modal } from '@arco-design/web-vue';
@@ -398,8 +402,17 @@
     gap: [188, 188],
   });
 
+  const calcProfit = () => {
+    if (form.value.productId === '') {
+      Message.error(t('common.message.product.required'));
+      return;
+    }
+    form.value.productProfit =
+      form.value.sellingPrice - form.value.purchasePrice;
+  };
+
   function getData() {
-    getSellingPrice().then((res) => {
+    getProductSellingPrice().then((res) => {
       data.value = res.data;
     });
   }
@@ -410,7 +423,6 @@
   };
 
   const onEdit = (record: any) => {
-    console.log(record);
     operationId.value = record.id;
     isSave.value = true;
     isAdd.value = false;
@@ -527,7 +539,7 @@
       okLoading: !loading,
       async onOk() {
         setLoading(true);
-        deleteProductInfo(id)
+        deleteProductSellingPrice(id)
           .then((res: any) => {
             if (res.code === 20000) {
               Message.success(t('common.message.delete.success'));
@@ -554,14 +566,24 @@
       productUnit: product?.productUnit,
       purchasePrice: product?.purchasePrice,
       standardPrice: product?.standardPrice,
+      sellingPrice: 0,
+      priceLevel: 1,
     };
+    calcProfit();
   };
 
   const confirmAdd = () => {
     formRef.value.validate(async (vaild: any) => {
       if (!vaild) {
         setLoading(true);
-        addProductInfo(form.value)
+        addProductSellingPrice({
+          productId: form.value.productId,
+          purchasePrice: form.value.purchasePrice,
+          standardPrice: form.value.standardPrice,
+          sellingPrice: form.value.sellingPrice,
+          productProfit: form.value.productProfit,
+          priceLevel: form.value.priceLevel,
+        })
           .then((res: any) => {
             if (res.code === 20000) {
               getData();
@@ -581,9 +603,14 @@
     formRef.value.validate(async (vaild: any) => {
       if (!vaild) {
         setLoading(true);
-        updateProductInfo({
+        updateProductSellingPrice({
           id: operationId.value,
-          ...form.value,
+          productId: form.value.productId,
+          purchasePrice: form.value.purchasePrice,
+          standardPrice: form.value.standardPrice,
+          sellingPrice: form.value.sellingPrice,
+          productProfit: form.value.productProfit,
+          priceLevel: form.value.priceLevel,
         })
           .then((res: any) => {
             if (res.code === 20000) {
