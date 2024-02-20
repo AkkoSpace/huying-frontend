@@ -97,8 +97,20 @@
         <a-form ref="formRef" :model="form" auto-label-width>
           <a-row w-full :gutter="12">
             <a-col :span="12">
-              <a-form-item :label="$t('title.sellingPrice.productId')">
-                <a-select v-model="form.productId" @change="onProductChange">
+              <a-form-item
+                :label="$t('title.sellingPrice.productId')"
+                :rules="[
+                  {
+                    required: true,
+                    message: $t('rules.sellingPrice.productId.required'),
+                  },
+                ]"
+              >
+                <a-select
+                  v-model="form.productId"
+                  @change="onProductChange"
+                  :placeholder="$t('ph.sellingPrice.selectProduct')"
+                >
                   <a-option
                     v-for="item in productList"
                     :key="item.id"
@@ -109,7 +121,11 @@
                 </a-select>
               </a-form-item>
               <a-form-item :label="$t('title.sellingPrice.brandId')">
-                <a-select v-model="form.brandId" disabled>
+                <a-select
+                  v-model="form.brandId"
+                  disabled
+                  :placeholder="$t('ph.sellingPrice.selectProduct')"
+                >
                   <a-option
                     v-for="item in brandList"
                     :key="item.id"
@@ -120,7 +136,11 @@
                 </a-select>
               </a-form-item>
               <a-form-item :label="$t('title.sellingPrice.categoryId')">
-                <a-select v-model="form.categoryId" disabled>
+                <a-select
+                  v-model="form.categoryId"
+                  disabled
+                  :placeholder="$t('ph.sellingPrice.selectProduct')"
+                >
                   <a-option
                     v-for="item in categoryList"
                     :key="item.id"
@@ -131,19 +151,65 @@
                 </a-select>
               </a-form-item>
               <a-form-item :label="$t('title.sellingPrice.productName')">
-                <a-input v-model="form.productName" disabled />
+                <a-input
+                  v-model="form.productName"
+                  disabled
+                  :placeholder="$t('ph.sellingPrice.selectProduct')"
+                />
               </a-form-item>
               <a-form-item :label="$t('title.sellingPrice.barCode')">
-                <a-input v-model="form.barCode" disabled />
+                <a-input
+                  v-model="form.barCode"
+                  disabled
+                  :placeholder="$t('ph.sellingPrice.selectProduct')"
+                />
               </a-form-item>
               <a-form-item :label="$t('title.sellingPrice.productSpec')">
-                <a-input v-model="form.productSpec" disabled />
+                <a-input
+                  v-model="form.productSpec"
+                  disabled
+                  :placeholder="$t('ph.sellingPrice.selectProduct')"
+                />
               </a-form-item>
               <a-form-item :label="$t('title.sellingPrice.productUnit')">
-                <a-select v-model="form.productUnit" disabled />
+                <a-select
+                  v-model="form.productUnit"
+                  disabled
+                  :placeholder="$t('ph.sellingPrice.selectProduct')"
+                />
               </a-form-item>
             </a-col>
             <a-col :span="12">
+              <a-form-item
+                :label="$t('title.sellingPrice.supplierId')"
+                :rules="[
+                  {
+                    required: true,
+                    message: $t('rules.sellingPrice.supplierId.required'),
+                  },
+                ]"
+                :validate-trigger="['change', 'blur']"
+                field="supplier"
+              >
+                <a-select
+                  v-model="form.supplierId"
+                  :allow-clear="true"
+                  :placeholder="$t('ph.sellingPrice.supplierId')"
+                >
+                  <!--                  <a-option v-for="item in supplierList" :key="item.id">-->
+                  <!--                    {{ item.supplierName }}-->
+                  <!--                  </a-option>-->
+                  <template #empty>
+                    <a-empty>
+                      <template #image>
+                        <icon-exclamation-circle-fill />
+                      </template>
+                      {{ $t('text.noData') }}
+                    </a-empty>
+                  </template>
+                </a-select>
+              </a-form-item>
+
               <a-form-item
                 :label="$t('title.sellingPrice.purchasePrice')"
                 :rules="[
@@ -183,9 +249,9 @@
                   :allow-clear="true"
                   :hide-button="true"
                   :min="0"
-                  disabled
                   :placeholder="$t('ph.sellingPrice.standardPrice')"
                   :precision="2"
+                  disabled
                 >
                   <template #prefix> ￥</template>
                 </a-input-number>
@@ -392,6 +458,7 @@
     barCode: '',
     productSpec: '',
     productUnit: '',
+    supplierId: '',
     purchasePrice: 0,
     standardPrice: 0,
     sellingPrice: 0,
@@ -403,10 +470,6 @@
   });
 
   const calcProfit = () => {
-    if (form.value.productId === '') {
-      Message.error(t('common.message.product.required'));
-      return;
-    }
     form.value.productProfit =
       form.value.sellingPrice - form.value.purchasePrice;
   };
@@ -434,6 +497,7 @@
       barCode: record.barCode,
       productSpec: record.productSpec,
       productUnit: record.productUnit,
+      supplierId: record.supplierId,
       purchasePrice: record.purchasePrice,
       standardPrice: record.standardPrice,
       sellingPrice: record.sellingPrice,
@@ -495,6 +559,10 @@
       {
         label: t('title.sellingPrice.productUnit'),
         value: record.productUnit,
+      },
+      {
+        label: t('title.sellingPrice.supplierId'),
+        value: record.supplierId,
       },
       {
         label: t('title.sellingPrice.purchasePrice'),
@@ -564,8 +632,8 @@
       barCode: product?.barCode,
       productSpec: product?.productSpec,
       productUnit: product?.productUnit,
-      purchasePrice: product?.purchasePrice,
-      standardPrice: product?.standardPrice,
+      purchasePrice: 0,
+      standardPrice: 0,
       sellingPrice: 0,
       priceLevel: 1,
     };

@@ -7,6 +7,7 @@ export default {
   'text.priceLevel.1': '一级',
   'text.priceLevel.2': '二级',
   'text.priceLevel.3': '三级',
+  'text.noData': '暂无供应商提供此产品的价格信息',
   // 标题文本
   'title.operation': '操作',
   'title.sellingPrice': '产品信息',
@@ -20,11 +21,22 @@ export default {
   'title.sellingPrice.barCode': '条形码',
   'title.sellingPrice.productSpec': '规格',
   'title.sellingPrice.productUnit': '单位',
+  'title.sellingPrice.supplierId': '供应商',
   'title.sellingPrice.purchasePrice': '进货单价',
   'title.sellingPrice.standardPrice': '标准单价',
   'title.sellingPrice.sellingPrice': '销售单价',
   'title.sellingPrice.productProfit': '产品利润',
   'title.sellingPrice.priceLevel': '价格等级',
   // 占位文本
+  'ph.sellingPrice.selectProduct': '请先选择产品',
+  'ph.sellingPrice.supplierId': '请选择供应商',
+  'ph.sellingPrice.purchasePrice': '请输入进货单价',
+  'ph.sellingPrice.standardPrice': '请输入标准单价',
+  'ph.sellingPrice.sellingPrice': '请输入销售单价',
   // 校验规则
+  'rules.sellingPrice.productId.required': '请选择产品',
+  'rules.sellingPrice.supplierId.required': '请选择供应商',
+  'rules.sellingPrice.purchasePrice.required': '请输入进货单价',
+  'rules.sellingPrice.standardPrice.required': '请输入标准单价',
+  'rules.sellingPrice.sellingPrice.required': '请输入销售单价',
 };

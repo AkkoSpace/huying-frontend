@@ -198,50 +198,6 @@
           </a-option>
         </a-select>
       </a-form-item>
-      <a-form-item
-        :label="$t('title.info.purchasePrice')"
-        :rules="[
-          {
-            required: true,
-            message: $t('rules.info.purchasePrice.required'),
-          },
-        ]"
-        :validate-trigger="['change', 'blur']"
-        field="purchasePrice"
-      >
-        <a-input-number
-          v-model="form.purchasePrice"
-          :allow-clear="true"
-          :hide-button="true"
-          :min="0"
-          :placeholder="$t('ph.info.purchasePrice')"
-          :precision="2"
-        >
-          <template #prefix> ￥</template>
-        </a-input-number>
-      </a-form-item>
-      <a-form-item
-        :label="$t('title.info.standardPrice')"
-        :rules="[
-          {
-            required: true,
-            message: $t('rules.info.standardPrice.required'),
-          },
-        ]"
-        :validate-trigger="['change', 'blur']"
-        field="standardPrice"
-      >
-        <a-input-number
-          v-model="form.standardPrice"
-          :allow-clear="true"
-          :hide-button="true"
-          :min="0"
-          :placeholder="$t('ph.info.standardPrice')"
-          :precision="2"
-        >
-          <template #prefix> ￥</template>
-        </a-input-number>
-      </a-form-item>
     </a-form>
     <a-space flex justify-end>
       <a-button @click="cancelSave">
@@ -314,14 +270,6 @@
       dataIndex: 'productUnit',
     },
     {
-      title: t('title.info.purchasePrice'),
-      dataIndex: 'purchasePrice',
-    },
-    {
-      title: t('title.info.standardPrice'),
-      dataIndex: 'standardPrice',
-    },
-    {
       title: t('title.operation'),
       slotName: 'operation',
       width: 100,
@@ -357,8 +305,6 @@
     barCode: '',
     productSpec: '',
     productUnit: '',
-    purchasePrice: 0,
-    standardPrice: 0,
   });
   const watermark = reactive({
     gap: [188, 188],
@@ -386,8 +332,6 @@
       barCode: record.barCode,
       productSpec: record.productSpec,
       productUnit: record.productUnit,
-      purchasePrice: record.purchasePrice,
-      standardPrice: record.standardPrice,
     };
   };
 
@@ -437,14 +381,6 @@
       {
         label: t('title.info.productUnit'),
         value: record.productUnit,
-      },
-      {
-        label: t('title.info.purchasePrice'),
-        value: `￥ ${record.purchasePrice}`,
-      },
-      {
-        label: t('title.info.standardPrice'),
-        value: `￥ ${record.standardPrice}`,
       },
       {
         label: t('common.title.userId'),
